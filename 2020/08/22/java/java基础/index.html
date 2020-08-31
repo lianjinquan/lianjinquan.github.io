@@ -1,0 +1,434 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>java基础 | soul</title><meta name="description" content="整理的一些java基础知识"><meta name="keywords" content="java"><meta name="author" content="soul"><meta name="copyright" content="soul"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="canonical" href="https://www.lianjinquan.com/2020/08/22/java/java%E5%9F%BA%E7%A1%80/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="java基础"><meta property="og:url" content="https://www.lianjinquan.com/2020/08/22/java/java%E5%9F%BA%E7%A1%80/"><meta property="og:site_name" content="soul"><meta property="og:description" content="整理的一些java基础知识"><meta property="og:image" content="https://i.erosouko.pub/2020/08/22/788a3ee228262.jpg"><meta property="article:published_time" content="2020-08-22T14:23:59.000Z"><meta property="article:modified_time" content="2020-08-22T15:53:10.107Z"><meta name="twitter:card" content="summary"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.0.2',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime: '天',
+  date_suffix: {"one_hour":"刚刚","hours":"小時前","day":"天前"},
+  copyright: undefined,
+  ClickShowText: {"text":"我,喜欢,你","fontSize":"15px"},
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+      const now = new Date()
+      const expiryDay = ttl * 86400000
+      const item = {
+        value: value,
+        expiry: now.getTime() + expiryDay,
+      }
+      localStorage.setItem(key, JSON.stringify(item))
+    },
+  
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-08-22 23:53:10'
+}</script><noscript><style type="text/css">
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+  }
+}
+
+var autoChangeMode = 'false'
+var t = saveToLocal.get('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (saveToLocal.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/less.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/tag.css"><meta name="generator" content="Hexo 5.0.2"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">20</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">15</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">15</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div id="body-wrap"><div id="web_bg" data-type="photo"></div><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%89%B9%E5%BE%81%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B9%E9%9D%A2%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">面向对象的特征有哪些方面？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6public-private-protected-%E4%BB%A5%E5%8F%8A%E4%B8%8D%E5%86%99%EF%BC%88%E9%BB%98%E8%AE%A4%EF%BC%89%E6%97%B6%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">访问修饰符public,private,protected,以及不写（默认）时的区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#String%E6%98%AF%E6%9C%80%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%90%97%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">String是最基本的数据类型吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#float-f-3-4-%E6%98%AF%E5%90%A6%E6%AD%A3%E7%A1%AE%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">float f&#x3D;3.4;是否正确？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#short-s1-1-s1-s1-1-%E6%9C%89%E9%94%99%E5%90%97-short-s1-1-s1-1-%E6%9C%89%E9%94%99%E5%90%97%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">short s1 &#x3D; 1; s1 &#x3D; s1 + 1;有错吗?short s1 &#x3D; 1; s1 +&#x3D; 1;有错吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E6%9C%89%E6%B2%A1%E6%9C%89goto%EF%BC%9F"><span class="toc-number">6.</span> <span class="toc-text">Java有没有goto？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#int%E5%92%8CInteger%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">int和Integer有什么区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#amp-%E5%92%8C-amp-amp-%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">8.</span> <span class="toc-text">&amp;和&amp;&amp;的区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E6%A0%88-stack-%E3%80%81%E5%A0%86-heap-%E5%92%8C%E6%96%B9%E6%B3%95%E5%8C%BA-method-area-%E7%9A%84%E7%94%A8%E6%B3%95%E3%80%82"><span class="toc-number">9.</span> <span class="toc-text">解释内存中的栈(stack)、堆(heap)和方法区(method area)的用法。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#a-a-b%E4%B8%8Ea-b%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="toc-number">10.</span> <span class="toc-text">a&#x3D;a+b与a+&#x3D;b有什么区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#a-b%E4%B8%8Ea-equals-b-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="toc-number">11.</span> <span class="toc-text">a&#x3D;&#x3D;b与a.equals(b)有什么区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-0-1-0-3%E8%BF%94%E5%9B%9E%E5%80%BC%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">12.</span> <span class="toc-text">3*0.1&#x3D;&#x3D;0.3返回值是什么?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#switch%E6%98%AF%E5%90%A6%E8%83%BD%E4%BD%9C%E7%94%A8%E5%9C%A8byte%E4%B8%8A%EF%BC%8C%E6%98%AF%E5%90%A6%E8%83%BD%E4%BD%9C%E7%94%A8%E5%9C%A8long%E4%B8%8A%EF%BC%8C%E6%98%AF%E5%90%A6%E8%83%BD%E4%BD%9C%E7%94%A8%E5%9C%A8String%E4%B8%8A%EF%BC%9F"><span class="toc-number">13.</span> <span class="toc-text">switch是否能作用在byte上，是否能作用在long上，是否能作用在String上？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E6%9C%89%E6%B2%A1%E6%9C%89length-%E6%96%B9%E6%B3%95%EF%BC%9FString%E6%9C%89%E6%B2%A1%E6%9C%89length-%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="toc-number">14.</span> <span class="toc-text">数组有没有length()方法？String有没有length()方法？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8Java%E4%B8%AD%EF%BC%8C%E5%A6%82%E4%BD%95%E8%B7%B3%E5%87%BA%E5%BD%93%E5%89%8D%E7%9A%84%E5%A4%9A%E9%87%8D%E5%B5%8C%E5%A5%97%E5%BE%AA%E7%8E%AF%EF%BC%9F"><span class="toc-number">15.</span> <span class="toc-text">在Java中，如何跳出当前的多重嵌套循环？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%99%A8%EF%BC%88constructor%EF%BC%89%E6%98%AF%E5%90%A6%E5%8F%AF%E8%A2%AB%E9%87%8D%E5%86%99%EF%BC%88override%EF%BC%89%EF%BC%9F"><span class="toc-number">16.</span> <span class="toc-text">构造器（constructor）是否可被重写（override）？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E5%AF%B9%E8%B1%A1%E5%80%BC%E7%9B%B8%E5%90%8C-x-equals-y-true-%EF%BC%8C%E4%BD%86%E5%8D%B4%E5%8F%AF%E6%9C%89%E4%B8%8D%E5%90%8C%E7%9A%84hash-code%EF%BC%8C%E8%BF%99%E5%8F%A5%E8%AF%9D%E5%AF%B9%E4%B8%8D%E5%AF%B9%EF%BC%9F"><span class="toc-number">17.</span> <span class="toc-text">两个对象值相同(x.equals(y) &#x3D;&#x3D; true)，但却可有不同的hash code，这句话对不对？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E7%BB%A7%E6%89%BFString%E7%B1%BB%EF%BC%9F"><span class="toc-number">18.</span> <span class="toc-text">是否可以继承String类？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%93%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E8%A2%AB%E5%BD%93%E4%BD%9C%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%E5%88%B0%E4%B8%80%E4%B8%AA%E6%96%B9%E6%B3%95%E5%90%8E%EF%BC%8C%E6%AD%A4%E6%96%B9%E6%B3%95%E5%8F%AF%E6%94%B9%E5%8F%98%E8%BF%99%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7%EF%BC%8C%E5%B9%B6%E5%8F%AF%E8%BF%94%E5%9B%9E%E5%8F%98%E5%8C%96%E5%90%8E%E7%9A%84%E7%BB%93%E6%9E%9C%EF%BC%8C%E9%82%A3%E4%B9%88%E8%BF%99%E9%87%8C%E5%88%B0%E5%BA%95%E6%98%AF%E5%80%BC%E4%BC%A0%E9%80%92%E8%BF%98%E6%98%AF%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92%EF%BC%9F"><span class="toc-number">19.</span> <span class="toc-text">当一个对象被当作参数传递到一个方法后，此方法可改变这个对象的属性，并可返回变化后的结果，那么这里到底是值传递还是引用传递？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object-%E7%B1%BB%E5%8C%85%E5%90%AB%E5%93%AA%E4%BA%9B%E6%96%B9%E6%B3%95"><span class="toc-number">20.</span> <span class="toc-text">Object 类包含哪些方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#String%E5%92%8CStringBuilder%E3%80%81StringBuffer%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">21.</span> <span class="toc-text">String和StringBuilder、StringBuffer的区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD%EF%BC%88Overload%EF%BC%89%E5%92%8C%E9%87%8D%E5%86%99%EF%BC%88Override%EF%BC%89%E7%9A%84%E5%8C%BA%E5%88%AB%E3%80%82%E9%87%8D%E8%BD%BD%E7%9A%84%E6%96%B9%E6%B3%95%E8%83%BD%E5%90%A6%E6%A0%B9%E6%8D%AE%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B%E8%BF%9B%E8%A1%8C%E5%8C%BA%E5%88%86%EF%BC%9F"><span class="toc-number">22.</span> <span class="toc-text">重载（Overload）和重写（Override）的区别。重载的方法能否根据返回类型进行区分？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#char-%E5%9E%8B%E5%8F%98%E9%87%8F%E4%B8%AD%E8%83%BD%E4%B8%8D%E8%83%BD%E5%AD%98%E8%B4%AE%E4%B8%80%E4%B8%AA%E4%B8%AD%E6%96%87%E6%B1%89%E5%AD%97%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">23.</span> <span class="toc-text">char 型变量中能不能存贮一个中文汉字，为什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E7%B1%BB%EF%BC%88abstract-class%EF%BC%89%E5%92%8C%E6%8E%A5%E5%8F%A3%EF%BC%88interface%EF%BC%89%E6%9C%89%E4%BB%80%E4%B9%88%E5%BC%82%E5%90%8C%EF%BC%9F"><span class="toc-number">24.</span> <span class="toc-text">抽象类（abstract class）和接口（interface）有什么异同？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%B5%8C%E5%A5%97%E7%B1%BB%EF%BC%88Static-Nested-Class%EF%BC%89%E5%92%8C%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%88Inner-Class%EF%BC%89%E7%9A%84%E4%B8%8D%E5%90%8C%EF%BC%9F"><span class="toc-number">25.</span> <span class="toc-text">静态嵌套类（Static Nested Class）和内部类（Inner Class）的不同？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E4%B8%AD%E4%BC%9A%E5%AD%98%E5%9C%A8%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%90%97%EF%BC%9F%E8%AF%B7%E7%AE%80%E5%8D%95%E6%8F%8F%E8%BF%B0%E3%80%82"><span class="toc-number">26.</span> <span class="toc-text">Java中会存在内存泄漏吗？请简单描述。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E7%9A%84%EF%BC%88abstract%EF%BC%89%E6%96%B9%E6%B3%95%E6%98%AF%E5%90%A6%E5%8F%AF%E5%90%8C%E6%97%B6%E6%98%AF%E9%9D%99%E6%80%81%E7%9A%84%EF%BC%88static%EF%BC%89%EF%BC%8C%E6%98%AF%E5%90%A6%E5%8F%AF%E5%90%8C%E6%97%B6%E6%98%AF%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%EF%BC%88native%EF%BC%89%EF%BC%8C%E6%98%AF%E5%90%A6%E5%8F%AF%E5%90%8C%E6%97%B6%E8%A2%ABsynchronized%E4%BF%AE%E9%A5%B0%EF%BC%9F"><span class="toc-number">27.</span> <span class="toc-text">抽象的（abstract）方法是否可同时是静态的（static），是否可同时是本地方法（native），是否可同时被synchronized修饰？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%90%E8%BF%B0%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E5%92%8C%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F%E7%9A%84%E5%8C%BA%E5%88%AB%E3%80%82"><span class="toc-number">28.</span> <span class="toc-text">阐述静态变量和实例变量的区别。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E4%BB%8E%E4%B8%80%E4%B8%AA%E9%9D%99%E6%80%81%EF%BC%88static%EF%BC%89%E6%96%B9%E6%B3%95%E5%86%85%E9%83%A8%E5%8F%91%E5%87%BA%E5%AF%B9%E9%9D%9E%E9%9D%99%E6%80%81%EF%BC%88non-static%EF%BC%89%E6%96%B9%E6%B3%95%E7%9A%84%E8%B0%83%E7%94%A8%EF%BC%9F"><span class="toc-number">29.</span> <span class="toc-text">是否可以从一个静态（static）方法内部发出对非静态（non-static）方法的调用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AF%B9%E8%B1%A1%E5%85%8B%E9%9A%86%EF%BC%9F"><span class="toc-number">30.</span> <span class="toc-text">如何实现对象克隆？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#String-s-new-String-%E2%80%9Cxyz%E2%80%9D-%E5%88%9B%E5%BB%BA%E4%BA%86%E5%87%A0%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E8%B1%A1%EF%BC%9F"><span class="toc-number">31.</span> <span class="toc-text">String s &#x3D; new String(“xyz”);创建了几个字符串对象？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E6%98%AF%E5%90%A6%E5%8F%AF%E7%BB%A7%E6%89%BF%E6%8E%A5%E5%8F%A3%EF%BC%9F%E6%8A%BD%E8%B1%A1%E7%B1%BB%E6%98%AF%E5%90%A6%E5%8F%AF%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3%EF%BC%9F%E6%8A%BD%E8%B1%A1%E7%B1%BB%E6%98%AF%E5%90%A6%E5%8F%AF%E7%BB%A7%E6%89%BF%E5%85%B7%E4%BD%93%E7%B1%BB%EF%BC%9F"><span class="toc-number">32.</span> <span class="toc-text">接口是否可继承接口？抽象类是否可实现接口？抽象类是否可继承具体类？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E2%80%9D-java%E2%80%9D%E6%BA%90%E6%96%87%E4%BB%B6%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E5%8C%85%E5%90%AB%E5%A4%9A%E4%B8%AA%E7%B1%BB%EF%BC%88%E4%B8%8D%E6%98%AF%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%89%EF%BC%9F%E6%9C%89%E4%BB%80%E4%B9%88%E9%99%90%E5%88%B6%EF%BC%9F"><span class="toc-number">33.</span> <span class="toc-text">一个”.java”源文件中是否可以包含多个类（不是内部类）？有什么限制？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Anonymous-Inner-Class-%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB-%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E7%BB%A7%E6%89%BF%E5%85%B6%E5%AE%83%E7%B1%BB%EF%BC%9F%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3%EF%BC%9F"><span class="toc-number">34.</span> <span class="toc-text">Anonymous Inner Class(匿名内部类)是否可以继承其它类？是否可以实现接口？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E7%B1%BB%E5%8F%AF%E4%BB%A5%E5%BC%95%E7%94%A8%E5%AE%83%E7%9A%84%E5%8C%85%E5%90%AB%E7%B1%BB%EF%BC%88%E5%A4%96%E9%83%A8%E7%B1%BB%EF%BC%89%E7%9A%84%E6%88%90%E5%91%98%E5%90%97%EF%BC%9F%E6%9C%89%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E9%99%90%E5%88%B6%EF%BC%9F"><span class="toc-number">35.</span> <span class="toc-text">内部类可以引用它的包含类（外部类）的成员吗？有没有什么限制？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-%E4%B8%AD%E7%9A%84final%E5%85%B3%E9%94%AE%E5%AD%97%E6%9C%89%E5%93%AA%E4%BA%9B%E7%94%A8%E6%B3%95%EF%BC%9F"><span class="toc-number">36.</span> <span class="toc-text">Java 中的final关键字有哪些用法？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E5%87%BA%E4%B8%8B%E9%9D%A2%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C%E3%80%82"><span class="toc-number">37.</span> <span class="toc-text">指出下面程序的运行结果。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-number">38.</span> <span class="toc-text">数据类型之间的转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%8F%8D%E8%BD%AC%E5%8F%8A%E6%9B%BF%E6%8D%A2%EF%BC%9F"><span class="toc-number">39.</span> <span class="toc-text">如何实现字符串的反转及替换？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%8E%E6%A0%B7%E5%B0%86GB2312%E7%BC%96%E7%A0%81%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E4%B8%BAISO-8859-1%E7%BC%96%E7%A0%81%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%9F"><span class="toc-number">40.</span> <span class="toc-text">怎样将GB2312编码的字符串转换为ISO-8859-1编码的字符串？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E4%B8%80%E4%B8%8BJava%E5%92%8CJavaSciprt%E3%80%82"><span class="toc-number">41.</span> <span class="toc-text">比较一下Java和JavaSciprt。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8%E6%96%AD%E8%A8%80%EF%BC%88assert%EF%BC%89%EF%BC%9F"><span class="toc-number">42.</span> <span class="toc-text">什么时候用断言（assert）？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%90%E8%BF%B0final%E3%80%81finally%E3%80%81finalize%E7%9A%84%E5%8C%BA%E5%88%AB%E3%80%82"><span class="toc-number">42.1.</span> <span class="toc-text">阐述final、finally、finalize的区别。</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BBExampleA%E7%BB%A7%E6%89%BFException%EF%BC%8C%E7%B1%BBExampleB%E7%BB%A7%E6%89%BFExampleA%E3%80%82"><span class="toc-number">43.</span> <span class="toc-text">类ExampleA继承Exception，类ExampleB继承ExampleA。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E4%B8%AD%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BA%8F%E5%88%97%E5%8C%96%EF%BC%8C%E6%9C%89%E4%BB%80%E4%B9%88%E6%84%8F%E4%B9%89%EF%BC%9F"><span class="toc-number">44.</span> <span class="toc-text">Java中如何实现序列化，有什么意义？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B%E6%97%B6%EF%BC%8C%E8%BF%9E%E6%8E%A5%E6%B1%A0%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F"><span class="toc-number">45.</span> <span class="toc-text">在进行数据库编程时，连接池有什么作用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7"><span class="toc-number">46.</span> <span class="toc-text">如何保证接口的安全性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E8%BF%B0%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%8A%E5%85%B6%E7%94%A8%E9%80%94%E3%80%82"><span class="toc-number">47.</span> <span class="toc-text">简述正则表达式及其用途。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java%E4%B8%AD%E6%98%AF%E5%A6%82%E4%BD%95%E6%94%AF%E6%8C%81%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%93%8D%E4%BD%9C%E7%9A%84%EF%BC%9F"><span class="toc-number">48.</span> <span class="toc-text">Java中是如何支持正则表达式操作的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97%E4%B8%80%E4%B8%AA%E7%B1%BB%E7%9A%84%E7%B1%BB%E5%AF%B9%E8%B1%A1%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="toc-number">49.</span> <span class="toc-text">获得一个类的类对象有哪些方式？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%8F%8D%E5%B0%84%E8%B0%83%E7%94%A8%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="toc-number">50.</span> <span class="toc-text">如何通过反射调用对象的方法？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F"><span class="toc-number">51.</span> <span class="toc-text">冒泡排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%B9%82%E7%AD%89%E6%80%A7"><span class="toc-number">52.</span> <span class="toc-text">接口的幂等性</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://i.erosouko.pub/2020/08/22/788a3ee228262.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">soul</a></span><span class="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">java基础</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-08-22T14:23:59.000Z" title="发表于 2020-08-22 22:23:59">2020-08-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-22T15:53:10.107Z" title="更新于 2020-08-22 23:53:10">2020-08-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/java/">java</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">9.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>32分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>java基础整理</p>
+<a id="more"></a>
+
+<h3 id="面向对象的特征有哪些方面？"><a href="#面向对象的特征有哪些方面？" class="headerlink" title="面向对象的特征有哪些方面？"></a>面向对象的特征有哪些方面？</h3><p><strong>抽象</strong>：抽象是将一类对象的共同特征总结出来构造类的过程，包括数据抽象和行为抽象两方面。抽象只关注对象有哪些属性和行为，并不关注这些行为的细节是什么。</p>
+<p><strong>继承</strong>：继承是从已有类得到继承信息创建新类的过程。提供继承信息的类被称为父类（超类、基类）；得到继承信息的类被称为子类（派生类）。继承让变化中的软件系统有了一定的延续性，同时继承也是封装程序中可变因素的重要手段。</p>
+<p><strong>封装</strong>：通常认为封装是把数据和操作数据的方法绑定起来，对数据的访问只能通过已定义的接口。面向对象的本质就是将现实世界描绘成一系列完全自治、封闭的对象。我们在类中编写的方法就是对实现细节的一种封装；我们编写一个类就是对数据和数据操作的封装。可以说，封装就是隐藏一切可隐藏的东西，只向外界提供最简单的编程接口（可以想想普通洗衣机和全自动洗衣机的差别，明显全自动洗衣机封装更好因此操作起来更简单；我们现在使用的智能手机也是封装得足够好的，因为几个按键就搞定了所有的事情）。</p>
+<p><strong>多态性</strong>：多态性是指允许不同子类型的对象对同一消息作出不同的响应。简单的说就是用同样的对象引用调用同样的方法但是做了不同的事情。多态性分为编译时的多态性和运行时的多态性。如果将对象的方法视为对象向外界提供的服务，那么运行时的多态性可以解释为：当A系统访问B系统提供的服务时，B系统有多种提供服务的方式，但一切对A系统来说都是透明的（就像电动剃须刀是A系统，它的供电系统是B系统，B系统可以使用电池供电或者用交流电，甚至还有可能是太阳能，A系统只会通过B类对象调用供电的方法，但并不知道供电系统的底层实现是什么，究竟通过何种方式获得了动力）。</p>
+<ul>
+<li>方法重载（overload）实现的是编译时的多态性（也称为前绑定），而方法重写（override）实现的是运行时的多态性（也称为后绑定）。运行时的多态是面向对象最精髓的东西，要实现多态需要做两件事：</li>
+</ul>
+<ol>
+<li>方法重写（子类继承父类并重写父类中已有的或抽象的方法）；</li>
+<li>对象造型（用父类型引用引用子类型对象，这样同样的引用调用同样的方法就会根据子类对象的不同而表现出不同的行为）。</li>
+</ol>
+<h3 id="访问修饰符public-private-protected-以及不写（默认）时的区别？"><a href="#访问修饰符public-private-protected-以及不写（默认）时的区别？" class="headerlink" title="访问修饰符public,private,protected,以及不写（默认）时的区别？"></a>访问修饰符public,private,protected,以及不写（默认）时的区别？</h3><p>类的成员不写访问修饰时默认为default。默认对于同一个包中的其他类相当于公开（public），对于不是同一个包中的其他类相当于私有（private）。受保护（protected）对子类相当于公开，对不是同一包中的没有父子关系的类相当于私有。Java中，外部类的修饰符只能是public或默认，类的成员（包括内部类）的修饰符可以是以上四种。</p>
+<h3 id="String是最基本的数据类型吗？"><a href="#String是最基本的数据类型吗？" class="headerlink" title="String是最基本的数据类型吗？"></a>String是最基本的数据类型吗？</h3><p>不是。Java中的基本数据类型只有8个：<code>byte、short、int、long、float、double、char、boolean</code> 除了基本类型（primitive type），剩下的都是引用类型（reference type），Java 5以后引入的枚举类型也算是一种比较特殊的引用类型。</p>
+<h3 id="float-f-3-4-是否正确？"><a href="#float-f-3-4-是否正确？" class="headerlink" title="float f=3.4;是否正确？"></a>float f=3.4;是否正确？</h3><p>不正确。3.4是双精度数，将双精度型（double）赋值给浮点型（float）属于下转型（down-casting，也称为窄化）会造成精度损失，因此需要强制类型转换 <code>float f =(float)3.4;</code> 或者写成<code>float f =3.4F;</code>。</p>
+<h3 id="short-s1-1-s1-s1-1-有错吗-short-s1-1-s1-1-有错吗？"><a href="#short-s1-1-s1-s1-1-有错吗-short-s1-1-s1-1-有错吗？" class="headerlink" title="short s1 = 1; s1 = s1 + 1;有错吗?short s1 = 1; s1 += 1;有错吗？"></a>short s1 = 1; s1 = s1 + 1;有错吗?short s1 = 1; s1 += 1;有错吗？</h3><p>对于<code>short s1 = 1; s1 = s1 + 1;</code>由于1是int类型，因此s1+1运算结果也是int 型，需要强制转换类型才能赋值给short型。<br>而<code>short s1 = 1; s1 += 1;</code>可以正确编译，因为<code>s1+= 1;</code>相当于<code>s1 = (short)(s1 + 1);</code>其中有隐含的强制类型转换。<br>示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">前者有错，s1会自动提升为int类型，结果赋值给short类型，所以报错。</span><br><span class="line">后者无错，+&#x3D;这种赋值运算符隐含了强制类型转换。其实变量s1的值未被使用。</span><br><span class="line"> </span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(Math.round(11.5));    &#x2F;&#x2F; 12</span><br><span class="line">        System.out.println(Math.round(-11.5));   &#x2F;&#x2F; -11</span><br><span class="line"> </span><br><span class="line">        &#x2F;&#x2F; short s1 &#x3D; 1; </span><br><span class="line">        &#x2F;&#x2F; s1 &#x3D; s1 + 1; &#x2F;&#x2F; Type mismatch: cannot convert from int to short 类型不匹配：不能从int转换为short</span><br><span class="line"> </span><br><span class="line">        short s1 &#x3D; 1; &#x2F;&#x2F; The value of the local variable s1 is not used 局部变量s1的值未被使用 出现了警告</span><br><span class="line">        s1 +&#x3D; 1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Java有没有goto？"><a href="#Java有没有goto？" class="headerlink" title="Java有没有goto？"></a>Java有没有goto？</h3><p>goto 是Java中的保留字，在目前版本的Java中没有使用。</p>
+<h3 id="int和Integer有什么区别？"><a href="#int和Integer有什么区别？" class="headerlink" title="int和Integer有什么区别？"></a>int和Integer有什么区别？</h3><p>Java是一个近乎纯洁的面向对象编程语言，但是为了编程的方便还是引入了基本数据类型，但是为了能够将这些基本数据类型当成对象操作，Java为每一个基本数据类型都引入了对应的包装类型（wrapper class），int的包装类就是Integer，从Java 5开始引入了自动装箱/拆箱机制，使得二者可以相互转换。<br>Java 为每个原始类型提供了包装类型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">原始类型：boolean，char，byte，short，int，long，float，double</span><br><span class="line">包装类型：Boolean，Character，Byte，Short，Integer，Long，Float，Double</span><br></pre></td></tr></table></figure>
+
+<p>示例代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class AutoUnboxingTest &#123;</span><br><span class="line"> </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Integer a &#x3D; new Integer(3);</span><br><span class="line">        Integer b &#x3D; 3;                  &#x2F;&#x2F; 将3自动装箱成Integer类型</span><br><span class="line">        int c &#x3D; 3;</span><br><span class="line">        System.out.println(a &#x3D;&#x3D; b);     &#x2F;&#x2F; false 两个引用没有引用同一对象</span><br><span class="line">        System.out.println(a &#x3D;&#x3D; c);     &#x2F;&#x2F; true  a自动拆箱成int类型再和c比较</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>最近还遇到一个面试题，也是和自动装箱和拆箱有点关系的，代码如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class Test03 &#123;</span><br><span class="line"> </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Integer f1 &#x3D; 100, f2 &#x3D; 100, f3 &#x3D; 150, f4 &#x3D; 150;</span><br><span class="line"> </span><br><span class="line">        System.out.println(f1 &#x3D;&#x3D; f2);</span><br><span class="line">        System.out.println(f3 &#x3D;&#x3D; f4);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>如果不明就里很容易认为两个输出要么都是true要么都是false。首先需要注意的是f1、f2、f3、f4四个变量都是Integer对象引用，所以下面的==运算比较的不是值而是引用。装箱的本质是什么呢？当我们给一个Integer对象赋一个int值的时候，会调用Integer类的静态方法valueOf，如果看看valueOf的源代码就知道发生了什么。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">public static Integer valueOf(int i) &#123;</span><br><span class="line">        if (i &gt;&#x3D; IntegerCache.low &amp;&amp; i &lt;&#x3D; IntegerCache.high)</span><br><span class="line">            return IntegerCache.cache[i + (-IntegerCache.low)];</span><br><span class="line">        return new Integer(i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">IntegerCache是Integer的内部类，其代码如下所示：</span><br><span class="line">&#x2F;**</span><br><span class="line">     * Cache to support the object identity semantics of autoboxing for values between</span><br><span class="line">     * -128 and 127 (inclusive) as required by JLS.</span><br><span class="line">     *</span><br><span class="line">     * The cache is initialized on first usage.  The size of the cache</span><br><span class="line">     * may be controlled by the &#123;@code -XX:AutoBoxCacheMax&#x3D;&lt;size&gt;&#125; option.</span><br><span class="line">     * During VM initialization, java.lang.Integer.IntegerCache.high property</span><br><span class="line">     * may be set and saved in the private system properties in the</span><br><span class="line">     * sun.misc.VM class.</span><br><span class="line">     *&#x2F;</span><br><span class="line"> </span><br><span class="line">    private static class IntegerCache &#123;</span><br><span class="line">        static final int low &#x3D; -128;</span><br><span class="line">        static final int high;</span><br><span class="line">        static final Integer cache[];</span><br><span class="line"> </span><br><span class="line">        static &#123;</span><br><span class="line">            &#x2F;&#x2F; high value may be configured by property</span><br><span class="line">            int h &#x3D; 127;</span><br><span class="line">            String integerCacheHighPropValue &#x3D;</span><br><span class="line">                sun.misc.VM.getSavedProperty(&quot;java.lang.Integer.IntegerCache.high&quot;);</span><br><span class="line">            if (integerCacheHighPropValue !&#x3D; null) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    int i &#x3D; parseInt(integerCacheHighPropValue);</span><br><span class="line">                    i &#x3D; Math.max(i, 127);</span><br><span class="line">                    &#x2F;&#x2F; Maximum array size is Integer.MAX_VALUE</span><br><span class="line">                    h &#x3D; Math.min(i, Integer.MAX_VALUE - (-low) -1);</span><br><span class="line">                &#125; catch( NumberFormatException nfe) &#123;</span><br><span class="line">                    &#x2F;&#x2F; If the property cannot be parsed into an int, ignore it.</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            high &#x3D; h;</span><br><span class="line"> </span><br><span class="line">            cache &#x3D; new Integer[(high - low) + 1];</span><br><span class="line">            int j &#x3D; low;</span><br><span class="line">            for(int k &#x3D; 0; k &lt; cache.length; k++)</span><br><span class="line">                cache[k] &#x3D; new Integer(j++);</span><br><span class="line"> </span><br><span class="line">            &#x2F;&#x2F; range [-128, 127] must be interned (JLS7 5.1.7)</span><br><span class="line">            assert IntegerCache.high &gt;&#x3D; 127;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        private IntegerCache() &#123;&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>简单的说，如果整型字面量的值在-128到127之间，那么不会new新的Integer对象，而是直接引用常量池中的Integer对象，所以上面的面试题中f1==f2的结果是true，而f3==f4的结果是false。</p>
+<h3 id="amp-和-amp-amp-的区别？"><a href="#amp-和-amp-amp-的区别？" class="headerlink" title="&amp;和&amp;&amp;的区别？"></a>&amp;和&amp;&amp;的区别？</h3><p>&amp;运算符有两种用法：(1)按位与；(2)逻辑与。&amp;&amp;运算符是短路与运算。逻辑与跟短路与的差别是非常巨大的，虽然二者都要求运算符左右两端的布尔值都是true整个表达式的值才是true。<br>&amp;&amp;之所以称为短路运算是因为，如果&amp;&amp;左边的表达式的值是false，右边的表达式会被直接短路掉，不会进行运算。<br>很多时候我们可能都需要用&amp;&amp;而不是&amp;，例如在验证用户登录时判定用户名不是null而且不是空字符串，应当写为：<code>username != null &amp;&amp; !username.equals(&quot;&quot;)</code>，二者的顺序不能交换，更不能用&amp;运算符，因为第一个条件如果不成立，<br>根本不能进行字符串的equals比较，否则会产生NullPointerException异常。注意：逻辑或运算符（|）和短路或运算符（||）的差别也是如此。</p>
+<ul>
+<li>&amp;  只要左右两边有一个为false，则为false；只有全部都为true的时候，结果为true </li>
+<li>&amp;&amp; 只要符号左边为false，则结果为false；当左边为true，同时右边也为true，则结果为true</li>
+</ul>
+<h3 id="解释内存中的栈-stack-、堆-heap-和方法区-method-area-的用法。"><a href="#解释内存中的栈-stack-、堆-heap-和方法区-method-area-的用法。" class="headerlink" title="解释内存中的栈(stack)、堆(heap)和方法区(method area)的用法。"></a>解释内存中的栈(stack)、堆(heap)和方法区(method area)的用法。</h3><p>通常我们定义一个基本数据类型的变量，一个对象的引用，还有就是函数调用的现场保存都使用JVM中的栈空间；而通过new关键字和构造器创建的对象则放在堆空间，堆是垃圾收集器管理的主要区域，由于现在的垃圾收集器都采用分代收集算法，所以堆空间还可以细分为新生代和老生代，再具体一点可以分为Eden、Survivor（又可分为From Survivor和To Survivor）、Tenured；方法区和堆都是各个线程共享的内存区域，用于存储已经被JVM加载的类信息、常量、静态变量、JIT编译器编译后的代码等数据；程序中的字面量（literal）如直接书写的100、”hello”和常量都是放在常量池中，常量池是方法区的一部分，。栈空间操作起来最快但是栈很小，通常大量的对象都是放在堆空间，栈和堆的大小都可以通过JVM的启动参数来进行调整，栈空间用光了会引发StackOverflowError，而堆和常量池空间不足则会引发OutOfMemoryError。</p>
+<ul>
+<li>堆存放由new创建的对象和数组。栈由操作系统自动分配释放 ，用于存放函数的参数值、局部变量等<h3 id="a-a-b与a-b有什么区别"><a href="#a-a-b与a-b有什么区别" class="headerlink" title="a=a+b与a+=b有什么区别"></a>a=a+b与a+=b有什么区别</h3></li>
+</ul>
+<p>+=  操作符会进行隐式自动类型转换，此处a+=b隐式的将加操作的结果类型强制转换为持有结果的类型，而a=a+b则不会自动进行类型转换。如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">byte a &#x3D; 127; </span><br><span class="line">byte b &#x3D; 127; </span><br><span class="line">b &#x3D; a + b; &#x2F;&#x2F; error : cannot convert from int to byte </span><br><span class="line">b +&#x3D; a; &#x2F;&#x2F; ok</span><br></pre></td></tr></table></figure>
+
+<h3 id="a-b与a-equals-b-有什么区别"><a href="#a-b与a-equals-b-有什么区别" class="headerlink" title="a==b与a.equals(b)有什么区别"></a>a==b与a.equals(b)有什么区别</h3><p>如果a 和b 都是对象，则 a==b 是比较两个对象的引用，只有当 a 和 b 指向的是堆中的同一个对象才会返回 true。<br>a.equals(b) 是进行逻辑比较，所以通常需要重写该方法来提供逻辑一致性的比较。例如，String 类重写 equals() 方法，所以可以用于两个不同对象，但是包含的字母相同的比较。</p>
+<h3 id="3-0-1-0-3返回值是什么"><a href="#3-0-1-0-3返回值是什么" class="headerlink" title="3*0.1==0.3返回值是什么?"></a>3*0.1==0.3返回值是什么?</h3><p>false，因为有些浮点数不能完全精确的表示出来。</p>
+<h3 id="switch是否能作用在byte上，是否能作用在long上，是否能作用在String上？"><a href="#switch是否能作用在byte上，是否能作用在long上，是否能作用在String上？" class="headerlink" title="switch是否能作用在byte上，是否能作用在long上，是否能作用在String上？"></a>switch是否能作用在byte上，是否能作用在long上，是否能作用在String上？</h3><ul>
+<li>switch可作用于char,byte,short,int</li>
+<li>switch可作用于char,byte,short,int对应的包装类</li>
+<li>switch不可作用于long,double,float,boolean,包括他们的包装类</li>
+<li>switch中可以是字符串类型，string(jdk1.7之后)</li>
+<li>switch中可以是枚举类型(jdk1.5之后)</li>
+</ul>
+<h3 id="数组有没有length-方法？String有没有length-方法？"><a href="#数组有没有length-方法？String有没有length-方法？" class="headerlink" title="数组有没有length()方法？String有没有length()方法？"></a>数组有没有length()方法？String有没有length()方法？</h3><p>数组有length属性。String有length()方法。</p>
+<h3 id="在Java中，如何跳出当前的多重嵌套循环？"><a href="#在Java中，如何跳出当前的多重嵌套循环？" class="headerlink" title="在Java中，如何跳出当前的多重嵌套循环？"></a>在Java中，如何跳出当前的多重嵌套循环？</h3><p>在最外层循环前加一个标记如A，然后用break A;可以跳出多重循环。</p>
+<h3 id="构造器（constructor）是否可被重写（override）？"><a href="#构造器（constructor）是否可被重写（override）？" class="headerlink" title="构造器（constructor）是否可被重写（override）？"></a>构造器（constructor）是否可被重写（override）？</h3><p>构造器不能被继承，因此不能被重写，但可以被重载。</p>
+<h3 id="两个对象值相同-x-equals-y-true-，但却可有不同的hash-code，这句话对不对？"><a href="#两个对象值相同-x-equals-y-true-，但却可有不同的hash-code，这句话对不对？" class="headerlink" title="两个对象值相同(x.equals(y) == true)，但却可有不同的hash code，这句话对不对？"></a>两个对象值相同(x.equals(y) == true)，但却可有不同的hash code，这句话对不对？</h3><p>不对，如果两个对象x和y满足<code>x.equals(y) == true</code>，它们的哈希码（hash code）相同。Java对于eqauls方法和hashCode方法是这样规定的：</p>
+<ol>
+<li>如果两个对象相同（equals方法返回true），那么它们的hashCode值一定要相同；</li>
+<li>如果两个对象的hashCode相同，它们并不一定相同。</li>
+</ol>
+<h3 id="是否可以继承String类？"><a href="#是否可以继承String类？" class="headerlink" title="是否可以继承String类？"></a>是否可以继承String类？</h3><p>String 类是final类，不可以被继承。</p>
+<h3 id="当一个对象被当作参数传递到一个方法后，此方法可改变这个对象的属性，并可返回变化后的结果，那么这里到底是值传递还是引用传递？"><a href="#当一个对象被当作参数传递到一个方法后，此方法可改变这个对象的属性，并可返回变化后的结果，那么这里到底是值传递还是引用传递？" class="headerlink" title="当一个对象被当作参数传递到一个方法后，此方法可改变这个对象的属性，并可返回变化后的结果，那么这里到底是值传递还是引用传递？"></a>当一个对象被当作参数传递到一个方法后，此方法可改变这个对象的属性，并可返回变化后的结果，那么这里到底是值传递还是引用传递？</h3><p>是值传递。Java语言的方法调用只支持参数的值传递。当一个对象实例作为一个参数被传递到方法中时，参数的值就是对该对象的引用（地址值）。对象的属性可以在被调用过程中被改变，但对对象引用的改变是不会影响到调用者的。</p>
+<h3 id="Object-类包含哪些方法"><a href="#Object-类包含哪些方法" class="headerlink" title="Object 类包含哪些方法"></a>Object 类包含哪些方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">java.lang.Object</span><br><span class="line">protected Object clone() throws CloneNotSupportedException 创建并返回此对象的副本。</span><br><span class="line">public boolean equals(Object obj)判断另一对象与此对象是否「相等」。</span><br><span class="line">protected void finalize() throws Throwable当垃圾回收机制确定该对象不再被调用时，垃圾回收器会调用此方法。</span><br><span class="line">public final Class getClass()返回此对象的运行时类。</span><br><span class="line">public int hashCode()返回此对象的散列码值。</span><br><span class="line">public String toString()返回此对象的字符串表示形式。</span><br><span class="line">public final void notify()</span><br><span class="line">public final void notifyAll()</span><br><span class="line">public final void wait()</span><br><span class="line">public final void wait(long timeout)</span><br><span class="line">public final void wait(long timeout, int nanos)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="String和StringBuilder、StringBuffer的区别？"><a href="#String和StringBuilder、StringBuffer的区别？" class="headerlink" title="String和StringBuilder、StringBuffer的区别？"></a>String和StringBuilder、StringBuffer的区别？</h3><ul>
+<li>String是只读字符串，所引用的字符串不能被改变，一经定义，无法再增删改。String 是字符串常量，final修饰。</li>
+<li>String 定义的字符串保存在常量池里面，进行+操作时不能直接在原有基础上拼接。每次+操作 ： 隐式在堆上new了一个跟原字符串相同的StringBuilder对象，再调用append方法 拼接+后面的字符。</li>
+<li>String是只读字符串，所引用的字符串不能被改变，Stringbuffer和Stringbuilder定义的可以通过各种方法来达到简单的增删改；</li>
+<li>String和Stringbuilder在单线程环境下使用；</li>
+<li>StringBuffer在多线程环境下使用，可以保证线程同步；</li>
+<li>Stringbuilder 和StringBuffer 实现方法类似，均表示可变字符序列，不过StringBuffer 用synchronized关键字修饰（保证线程同步）</li>
+<li>当需要对某一字符串大量重复+操作时：Stringbuilder 最快，不需要考虑线程同步；StringBuffer次之；String最慢，因为每次都要重新开辟内存，产生很多匿名对象，影响系统性能。</li>
+</ul>
+<h3 id="重载（Overload）和重写（Override）的区别。重载的方法能否根据返回类型进行区分？"><a href="#重载（Overload）和重写（Override）的区别。重载的方法能否根据返回类型进行区分？" class="headerlink" title="重载（Overload）和重写（Override）的区别。重载的方法能否根据返回类型进行区分？"></a>重载（Overload）和重写（Override）的区别。重载的方法能否根据返回类型进行区分？</h3><p>方法的重载和重写都是实现多态的方式，区别在于前者实现的是编译时的多态性，而后者实现的是运行时的多态性。重载发生在一个类中，同名的方法如果有不同的参数列表（参数类型不同、参数个数不同或者二者都不同）则视为重载；重写发生在子类与父类之间，重写要求子类被重写方法与父类被重写方法有相同的返回类型，比父类被重写方法更好访问，不能比父类被重写方法声明更多的异常（里氏代换原则）。重载对返回类型没有特殊的要求。</p>
+<h3 id="char-型变量中能不能存贮一个中文汉字，为什么？"><a href="#char-型变量中能不能存贮一个中文汉字，为什么？" class="headerlink" title="char 型变量中能不能存贮一个中文汉字，为什么？"></a>char 型变量中能不能存贮一个中文汉字，为什么？</h3><p>char类型可以存储一个中文汉字，因为Java中使用的编码是Unicode（不选择任何特定的编码，直接使用字符在字符集中的编号，这是统一的唯一方法），一个char类型占2个字节（16比特），所以放一个中文是没问题的。</p>
+<h3 id="抽象类（abstract-class）和接口（interface）有什么异同？"><a href="#抽象类（abstract-class）和接口（interface）有什么异同？" class="headerlink" title="抽象类（abstract class）和接口（interface）有什么异同？"></a>抽象类（abstract class）和接口（interface）有什么异同？</h3><p>抽象类和接口都不能够实例化，但可以定义抽象类和接口类型的引用。一个类如果继承了某个抽象类或者实现了某个接口都需要对其中的抽象方法全部进行实现，否则该类仍然需要被声明为抽象类。接口比抽象类更加抽象，因为抽象类中可以定义构造器，可以有抽象方法和具体方法，而接口中不能定义构造器而且其中的方法全部都是抽象方法。抽象类中的成员可以是private、默认、protected、public的，而接口中的成员全都是public的。抽象类中可以定义成员变量，而接口中定义的成员变量实际上都是常量。有抽象方法的类必须被声明为抽象类，而抽象类未必要有抽象方法。</p>
+<h3 id="静态嵌套类（Static-Nested-Class）和内部类（Inner-Class）的不同？"><a href="#静态嵌套类（Static-Nested-Class）和内部类（Inner-Class）的不同？" class="headerlink" title="静态嵌套类（Static Nested Class）和内部类（Inner Class）的不同？"></a>静态嵌套类（Static Nested Class）和内部类（Inner Class）的不同？</h3><p>Static Nested Class是被声明为静态（static）的内部类，它可以不依赖于外部类实例被实例化。而通常的内部类需要在外部类实例化后才能实例化，其语法看起来挺诡异的。</p>
+<ul>
+<li>面试题：下面的代码哪些地方会产生编译错误？</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class Outer &#123;</span><br><span class="line"> </span><br><span class="line">    class Inner &#123;&#125;</span><br><span class="line"> </span><br><span class="line">    public static void foo() &#123; </span><br><span class="line">        new Inner(); </span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public void bar() &#123; </span><br><span class="line">        new Inner(); </span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        new Inner();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>注意：Java中非静态内部类对象的创建要依赖其外部类对象，上面的面试题中foo和main方法都是静态方法，静态方法中没有this，也就是说没有所谓的外部类对象，因此无法创建内部类对象，如果要在静态方法中创建内部类对象，可以这样做：new Outer().new Inner();</p>
+<h3 id="Java中会存在内存泄漏吗？请简单描述。"><a href="#Java中会存在内存泄漏吗？请简单描述。" class="headerlink" title="Java中会存在内存泄漏吗？请简单描述。"></a>Java中会存在内存泄漏吗？请简单描述。</h3><p>理论上Java因为有垃圾回收机制（GC）不会存在内存泄露问题（这也是Java被广泛使用于服务器端编程的一个重要原因）；然而在实际开发中，可能会存在无用但可达的对象，这些对象不能被GC回收，因此也会导致内存泄露的发生。例如Hibernate的Session（一级缓存）中的对象属于持久态，垃圾回收器是不会回收这些对象的，然而这些对象中可能存在无用的垃圾对象，如果不及时关闭（close）或清空（flush）一级缓存就可能导致内存泄露。</p>
+<h3 id="抽象的（abstract）方法是否可同时是静态的（static），是否可同时是本地方法（native），是否可同时被synchronized修饰？"><a href="#抽象的（abstract）方法是否可同时是静态的（static），是否可同时是本地方法（native），是否可同时被synchronized修饰？" class="headerlink" title="抽象的（abstract）方法是否可同时是静态的（static），是否可同时是本地方法（native），是否可同时被synchronized修饰？"></a>抽象的（abstract）方法是否可同时是静态的（static），是否可同时是本地方法（native），是否可同时被synchronized修饰？</h3><p>都不能。抽象方法需要子类重写，而静态的方法是无法被重写的，因此二者是矛盾的。本地方法是由本地代码（如C代码）实现的方法，而抽象方法是没有实现的，也是矛盾的。synchronized和方法的实现细节有关，抽象方法不涉及实现细节，因此也是相互矛盾的。</p>
+<h3 id="阐述静态变量和实例变量的区别。"><a href="#阐述静态变量和实例变量的区别。" class="headerlink" title="阐述静态变量和实例变量的区别。"></a>阐述静态变量和实例变量的区别。</h3><p>静态变量是被static修饰符修饰的变量，也称为类变量，它属于类，不属于类的任何一个对象，一个类不管创建多少个对象，静态变量在内存中有且仅有一个拷贝；实例变量必须依存于某一实例，需要先创建对象然后通过对象才能访问到它。静态变量可以实现让多个对象共享内存。</p>
+<h3 id="是否可以从一个静态（static）方法内部发出对非静态（non-static）方法的调用？"><a href="#是否可以从一个静态（static）方法内部发出对非静态（non-static）方法的调用？" class="headerlink" title="是否可以从一个静态（static）方法内部发出对非静态（non-static）方法的调用？"></a>是否可以从一个静态（static）方法内部发出对非静态（non-static）方法的调用？</h3><p>不可以，静态方法只能访问静态成员，因为非静态方法的调用要先创建对象，在调用静态方法时可能对象并没有被初始化。</p>
+<h3 id="如何实现对象克隆？"><a href="#如何实现对象克隆？" class="headerlink" title="如何实现对象克隆？"></a>如何实现对象克隆？</h3><p>有两种方式：</p>
+<ol>
+<li>实现Cloneable接口并重写Object类中的clone()方法；</li>
+<li>实现Serializable接口，通过对象的序列化和反序列化实现克隆，可以实现真正的深度克隆。</li>
+</ol>
+<h3 id="String-s-new-String-“xyz”-创建了几个字符串对象？"><a href="#String-s-new-String-“xyz”-创建了几个字符串对象？" class="headerlink" title="String s = new String(“xyz”);创建了几个字符串对象？"></a>String s = new String(“xyz”);创建了几个字符串对象？</h3><p>两个对象，一个是静态区的”xyz”，一个是用new创建在堆上的对象。</p>
+<h3 id="接口是否可继承接口？抽象类是否可实现接口？抽象类是否可继承具体类？"><a href="#接口是否可继承接口？抽象类是否可实现接口？抽象类是否可继承具体类？" class="headerlink" title="接口是否可继承接口？抽象类是否可实现接口？抽象类是否可继承具体类？"></a>接口是否可继承接口？抽象类是否可实现接口？抽象类是否可继承具体类？</h3><p>接口可以继承接口，而且支持多重继承。抽象类可以实现(implements)接口，抽象类可继承具体类也可以继承抽象类。</p>
+<h3 id="一个”-java”源文件中是否可以包含多个类（不是内部类）？有什么限制？"><a href="#一个”-java”源文件中是否可以包含多个类（不是内部类）？有什么限制？" class="headerlink" title="一个”.java”源文件中是否可以包含多个类（不是内部类）？有什么限制？"></a>一个”.java”源文件中是否可以包含多个类（不是内部类）？有什么限制？</h3><p>可以，但一个源文件中最多只能有一个公开类（public class）而且文件名必须和公开类的类名完全保持一致。</p>
+<h3 id="Anonymous-Inner-Class-匿名内部类-是否可以继承其它类？是否可以实现接口？"><a href="#Anonymous-Inner-Class-匿名内部类-是否可以继承其它类？是否可以实现接口？" class="headerlink" title="Anonymous Inner Class(匿名内部类)是否可以继承其它类？是否可以实现接口？"></a>Anonymous Inner Class(匿名内部类)是否可以继承其它类？是否可以实现接口？</h3><p>可以继承其他类或实现其他接口，在Swing编程和Android开发中常用此方式来实现事件监听和回调。</p>
+<h3 id="内部类可以引用它的包含类（外部类）的成员吗？有没有什么限制？"><a href="#内部类可以引用它的包含类（外部类）的成员吗？有没有什么限制？" class="headerlink" title="内部类可以引用它的包含类（外部类）的成员吗？有没有什么限制？"></a>内部类可以引用它的包含类（外部类）的成员吗？有没有什么限制？</h3><p>一个内部类对象可以访问创建它的外部类对象的成员，包括私有成员。</p>
+<h3 id="Java-中的final关键字有哪些用法？"><a href="#Java-中的final关键字有哪些用法？" class="headerlink" title="Java 中的final关键字有哪些用法？"></a>Java 中的final关键字有哪些用法？</h3><ol>
+<li>修饰类：表示该类不能被继承；</li>
+<li>修饰方法：表示方法不能被重写；</li>
+<li>修饰变量：表示变量只能一次赋值以后值不能被修改（常量）。</li>
+</ol>
+<h3 id="指出下面程序的运行结果。"><a href="#指出下面程序的运行结果。" class="headerlink" title="指出下面程序的运行结果。"></a>指出下面程序的运行结果。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">class A &#123;</span><br><span class="line"> </span><br><span class="line">    static &#123;</span><br><span class="line">        System.out.print(&quot;1&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public A() &#123;</span><br><span class="line">        System.out.print(&quot;2&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">class B extends A &#123;</span><br><span class="line"> </span><br><span class="line">    static &#123;</span><br><span class="line">        System.out.print(&quot;a&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public B() &#123;</span><br><span class="line">        System.out.print(&quot;b&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">public class Hello &#123;</span><br><span class="line"> </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        A ab &#x3D; new B();</span><br><span class="line">        ab &#x3D; new B();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>执行结果：1a2b2b。创建对象时构造器的调用顺序是：先初始化静态成员，然后调用父类构造器，再初始化非静态成员，最后调用自身构造器。</p>
+<h3 id="数据类型之间的转换"><a href="#数据类型之间的转换" class="headerlink" title="数据类型之间的转换"></a>数据类型之间的转换</h3><ul>
+<li>如何将字符串转换为基本数据类型？</li>
+</ul>
+<ol>
+<li>调用基本数据类型对应的包装类中的方法parseXXX(String)或valueOf(String)即可返回相应基本数据类型。</li>
+</ol>
+<ul>
+<li>如何将基本数据类型转换为字符串？</li>
+</ul>
+<ol>
+<li>  一种方法是将基本数据类型与空字符串（””）连接（+）即可获得其所对应的字符串；另一种方法是调用String 类中的valueOf()方法返回相应字符串。
+  </li>
+</ol>
+<h3 id="如何实现字符串的反转及替换？"><a href="#如何实现字符串的反转及替换？" class="headerlink" title="如何实现字符串的反转及替换？"></a>如何实现字符串的反转及替换？</h3><p>方法很多，可以自己写实现也可以使用String或StringBuffer/StringBuilder中的方法。有一道很常见的面试题是用递归实现字符串反转，代码如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static String reverse(String originStr) &#123;</span><br><span class="line">        if (originStr &#x3D;&#x3D; null || originStr.length() &lt;&#x3D; 1)</span><br><span class="line">            return originStr;</span><br><span class="line">        return reverse(originStr.substring(1)) + originStr.charAt(0);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="怎样将GB2312编码的字符串转换为ISO-8859-1编码的字符串？"><a href="#怎样将GB2312编码的字符串转换为ISO-8859-1编码的字符串？" class="headerlink" title="怎样将GB2312编码的字符串转换为ISO-8859-1编码的字符串？"></a>怎样将GB2312编码的字符串转换为ISO-8859-1编码的字符串？</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String s1 &#x3D; &quot;你好&quot;;</span><br><span class="line">String s2 &#x3D; new String(s1.getBytes(&quot;GB2312&quot;), &quot;ISO-8859-1&quot;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="比较一下Java和JavaSciprt。"><a href="#比较一下Java和JavaSciprt。" class="headerlink" title="比较一下Java和JavaSciprt。"></a>比较一下Java和JavaSciprt。</h3><p>JavaScript 与Java是两个公司开发的不同的两个产品。Java 是原Sun Microsystems公司推出的面向对象的程序设计语言，特别适合于互联网应用程序开发；而JavaScript是Netscape公司的产品，为了扩展Netscape浏览器的功能而开发的一种可以嵌入Web页面中运行的基于对象和事件驱动的解释性语言。JavaScript的前身是LiveScript；而Java的前身是Oak语言。<br>下面对两种语言间的异同作如下比较：<br>基于对象和面向对象：Java是一种真正的面向对象的语言，即使是开发简单的程序，必须设计对象；JavaScript是种脚本语言，它可以用来制作与网络无关的，与用户交互作用的复杂软件。它是一种基于对象（Object-Based）和事件驱动（Event-Driven）的编程语言，因而它本身提供了非常丰富的内部对象供设计人员使用。<br>解释和编译：Java的源代码在执行之前，必须经过编译。JavaScript是一种解释性编程语言，其源代码不需经过编译，由浏览器解释执行。（目前的浏览器几乎都使用了JIT（即时编译）技术来提升JavaScript的运行效率）<br>强类型变量和类型弱变量：Java采用强类型变量检查，即所有变量在编译之前必须作声明；JavaScript中变量是弱类型的，甚至在使用变量前可以不作声明，JavaScript的解释器在运行时检查推断其数据类型。<br>代码格式不一样。</p>
+<h3 id="什么时候用断言（assert）？"><a href="#什么时候用断言（assert）？" class="headerlink" title="什么时候用断言（assert）？"></a>什么时候用断言（assert）？</h3><p>断言在软件开发中是一种常用的调试方式，很多开发语言中都支持这种机制。一般来说，断言用于保证程序最基本、关键的正确性。断言检查通常在开发和测试时开启。为了保证程序的执行效率，在软件发布后断言检查通常是关闭的。断言是一个包含布尔表达式的语句，在执行这个语句时假定该表达式为true；如果表达式的值为false，那么系统会报告一个AssertionError。</p>
+<h4 id="阐述final、finally、finalize的区别。"><a href="#阐述final、finally、finalize的区别。" class="headerlink" title="阐述final、finally、finalize的区别。"></a>阐述final、finally、finalize的区别。</h4><ul>
+<li>final：修饰符（关键字）有三种用法：如果一个类被声明为final，意味着它不能再派生出新的子类，即不能被继承，因此它和abstract是反义词。将变量声明为final，可以保证它们在使用中不被改变，被声明为final的变量必须在声明时给定初值，而在以后的引用中只能读取不可修改。被声明为final的方法也同样只能使用，不能在子类中被重写。</li>
+<li>finally：通常放在try…catch…的后面构造总是执行代码块，这就意味着程序无论正常执行还是发生异常，这里的代码只要JVM不关闭都能执行，可以将释放外部资源的代码写在finally块中。</li>
+<li>finalize：Object类中定义的方法，Java中允许使用finalize()方法在垃圾收集器将对象从内存中清除出去之前做必要的清理工作。这个方法是由垃圾收集器在销毁对象时调用的，通过重写finalize()方法可以整理系统资源或者执行其他清理工作。</li>
+</ul>
+<h3 id="类ExampleA继承Exception，类ExampleB继承ExampleA。"><a href="#类ExampleA继承Exception，类ExampleB继承ExampleA。" class="headerlink" title="类ExampleA继承Exception，类ExampleB继承ExampleA。"></a>类ExampleA继承Exception，类ExampleB继承ExampleA。</h3><p>有如下代码片断：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">    throw new ExampleB(&quot;b&quot;)</span><br><span class="line">&#125; catch（ExampleA e）&#123;</span><br><span class="line">    System.out.println(&quot;ExampleA&quot;);</span><br><span class="line">&#125; catch（Exception e）&#123;</span><br><span class="line">    System.out.println(&quot;Exception&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请问执行此段代码的输出是什么？  </p>
+<p>  答：输出：ExampleA。（根据里氏代换原则[能使用父类型的地方一定能使用子类型]，抓取ExampleA类型异常的catch块能够抓住try块中抛出的ExampleB类型的异常）</p>
+<ul>
+<li>面试题：说出下面代码的运行结果。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class A extends Exception &#123;&#125;</span><br><span class="line">class B extends A &#123;&#125;</span><br><span class="line"> </span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                throw new B();</span><br><span class="line">            &#125; </span><br><span class="line">            catch (A a) &#123;</span><br><span class="line">                System.out.println(&quot;Caught A&quot;);</span><br><span class="line">                throw a;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; </span><br><span class="line">        catch (B b) &#123;</span><br><span class="line">            System.out.println(&quot;Caught B&quot;);</span><br><span class="line">            return ;</span><br><span class="line">        &#125;</span><br><span class="line">        finally &#123;</span><br><span class="line">            System.out.println(&quot;Hello World!&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Caught A</span><br><span class="line">Caught B</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+
+<h3 id="Java中如何实现序列化，有什么意义？"><a href="#Java中如何实现序列化，有什么意义？" class="headerlink" title="Java中如何实现序列化，有什么意义？"></a>Java中如何实现序列化，有什么意义？</h3><p>序列化就是一种用来处理对象流的机制，所谓对象流也就是将对象的内容进行流化。可以对流化后的对象进行读写操作，也可将流化后的对象传输于网络之间。序列化是为了解决对象流读写操作时可能引发的问题（如果不进行序列化可能会存在数据乱序的问题）。</p>
+<p>要实现序列化，需要让一个类实现Serializable接口，该接口是一个标识性接口，标注该类对象是可被序列化的，然后使用一个输出流来构造一个对象输出流并通过writeObject(Object)方法就可以将实现对象写出（即保存其状态）；如果需要反序列化则可以用一个输入流建立对象输入流，然后通过readObject方法从流中读取对象。序列化除了能够实现对象的持久化之外，还能够用于对象的深度克隆。</p>
+<h3 id="在进行数据库编程时，连接池有什么作用？"><a href="#在进行数据库编程时，连接池有什么作用？" class="headerlink" title="在进行数据库编程时，连接池有什么作用？"></a>在进行数据库编程时，连接池有什么作用？</h3><p>由于创建连接和释放连接都有很大的开销（尤其是数据库服务器不在本地时，每次建立连接都需要进行TCP的三次握手，释放连接需要进行TCP四次握手，造成的开销是不可忽视的），为了提升系统访问数据库的性能，可以事先创建若干连接置于连接池中，需要时直接从连接池获取，使用结束时归还连接池而不必关闭连接，从而避免频繁创建和释放连接所造成的开销，这是典型的用空间换取时间的策略（浪费了空间存储连接，但节省了创建和释放连接的时间）。池化技术在Java开发中是很常见的，在使用线程时创建线程池的道理与此相同。基于Java的开源数据库连接池主要有：C3P0、Proxool、DBCP、BoneCP、Druid等。</p>
+<p>补充：在计算机系统中时间和空间是不可调和的矛盾，理解这一点对设计满足性能要求的算法是至关重要的。大型网站性能优化的一个关键就是使用缓存，而缓存跟上面讲的连接池道理非常类似，也是使用空间换时间的策略。可以将热点数据置于缓存中，当用户查询这些数据时可以直接从缓存中得到，这无论如何也快过去数据库中查询。当然，缓存的置换策略等也会对系统性能产生重要影响，对于这个问题的讨论已经超出了这里要阐述的范围。e</p>
+<h3 id="如何保证接口的安全性"><a href="#如何保证接口的安全性" class="headerlink" title="如何保证接口的安全性"></a>如何保证接口的安全性</h3><ol>
+<li><strong>签名</strong><br>根据用户名或者用户id或者设备号，生成一个token。在请求后台，后台获取http的head中的token，校验是否合法</li>
+<li><strong>Token授权机制</strong><br>用户使用用户名密码登录后服务器给客户端返回一个Token（通常是UUID），并将Token-UserId以键值对的形式存放在缓存服务器中。服务端接收到请求后进行Token验证，如果Token不存在，说明请求无效。Token是客户端访问服务端的凭证。</li>
+<li><strong>时间戳超时机制</strong><br>用户每次请求都带上当前时间的时间戳timestamp，服务端接收到timestamp后跟当前时间进行比对，如果时间差大于一定时间（比如5分钟），则认为该请求失效。时间戳超时机制是防御DOS攻击的有效手段。</li>
+<li><strong>签名机制</strong><br>将 Token 和 时间戳 加上其他请求参数再用MD5或SHA-1算法（可根据情况加点盐）加密，加密后的数据就是本次请求的签名sign，服务端接收到请求后以同样的算法得到签名，并跟当前的签名进行比对，如果不一样，说明参数被更改过，直接返回错误标识。签名机制保证了数据不会被篡改。</li>
+<li><strong>加密</strong><br>加密 MD5 AES 对用户与帐号密码进行加密作为一个authcode。每次请求必须携带。  </li>
+</ol>
+<p><strong>客户端</strong>：<br>   1、设置一个key（和服务器端相同）<br>   2、根据上述key对请求进行某种加密（加密必须是可逆的，以便服务器端解密）<br>   3、发送请求给服务器<br><strong>服务器端</strong>：<br>    1、设置一个key<br>    2、根据上述的key对请求进行解密（校验成功就是「信任」的客户端发来的数据，否则拒绝响应）<br>    3、处理业务逻辑并产生结果<br>    4、将结果反馈给客户端<br>6.    <strong>第三方支持</strong><br>   spring security－oauth</p>
+<h3 id="简述正则表达式及其用途。"><a href="#简述正则表达式及其用途。" class="headerlink" title="简述正则表达式及其用途。"></a>简述正则表达式及其用途。</h3><p>答：在编写处理字符串的程序时，经常会有查找符合某些复杂规则的字符串的需要。正则表达式就是用于描述这些规则的工具。换句话说，正则表达式就是记录文本规则的代码。</p>
+<p>说明：计算机诞生初期处理的信息几乎都是数值，但是时过境迁，今天我们使用计算机处理的信息更多的时候不是数值而是字符串，正则表达式就是在进行字符串匹配和处理的时候最为强大的工具，绝大多数语言都提供了对正则表达式的支持。</p>
+<h3 id="Java中是如何支持正则表达式操作的？"><a href="#Java中是如何支持正则表达式操作的？" class="headerlink" title="Java中是如何支持正则表达式操作的？"></a>Java中是如何支持正则表达式操作的？</h3><p>答：Java中的String类提供了支持正则表达式操作的方法，包括：matches()、replaceAll()、replaceFirst()、split()。此外，Java中可以用Pattern类表示正则表达式对象，它提供了丰富的API进行各种正则表达式操作，请参考下面面试题的代码。</p>
+<p>面试题：如果要从字符串中截取第一个英文左括号之前的字符串，例如：北京市(朝阳区)(西城区)(海淀区)，截取结果为：北京市，那么正则表达式怎么写？</p>
+<p>import java.util.regex.Matcher;<br>import java.util.regex.Pattern;</p>
+<p>class RegExpTest {</p>
+<pre><code>public static void main(String[] args) &#123;
+    String str = &quot;北京市(朝阳区)(西城区)(海淀区)&quot;;
+    Pattern p = Pattern.compile(&quot;.*?(?=\\()&quot;);
+    Matcher m = p.matcher(str);
+    if(m.find()) &#123;
+        System.out.println(m.group());
+    &#125;
+&#125;</code></pre>
+<p>}<br>说明：上面的正则表达式中使用了懒惰匹配和前瞻，如果不清楚这些内容，推荐读一下网上很有名的《正则表达式30分钟入门教程》。</p>
+<h3 id="获得一个类的类对象有哪些方式？"><a href="#获得一个类的类对象有哪些方式？" class="headerlink" title="获得一个类的类对象有哪些方式？"></a>获得一个类的类对象有哪些方式？</h3><p>答：</p>
+<p>方法1：类型.class，例如：String.class<br>方法2：对象.getClass()，例如：”hello”.getClass()<br>方法3：Class.forName()，例如：Class.forName(“java.lang.String”)<br>86、如何通过反射创建对象？<br>答：</p>
+<p>方法1：通过类对象调用newInstance()方法，例如：String.class.newInstance()<br>方法2：通过类对象的getConstructor()或getDeclaredConstructor()方法获得构造器（Constructor）对象并调用其newInstance()方法创建对象，例如：String.class.getConstructor(String.class).newInstance(“Hello”);</p>
+<h3 id="如何通过反射调用对象的方法？"><a href="#如何通过反射调用对象的方法？" class="headerlink" title="如何通过反射调用对象的方法？"></a>如何通过反射调用对象的方法？</h3><p>答：请看下面的代码：</p>
+<p>import java.lang.reflect.Method;</p>
+<p>class MethodInvokeTest {</p>
+<pre><code>public static void main(String[] args) throws Exception &#123;
+    String str = &quot;hello&quot;;
+    Method m = str.getClass().getMethod(&quot;toUpperCase&quot;);
+    System.out.println(m.invoke(str));  // HELLO
+&#125;</code></pre>
+<p>}</p>
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><p><img src= "/img/loading.gif" data-lazy-src="/images/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F.gif" alt="冒泡排序"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import com.jiajia.ArrayUtil.*;  &#x2F;&#x2F; 按包名导入</span><br><span class="line"></span><br><span class="line">public class BubbleSortMain &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        int[] arr &#x3D; &#123;2,5,1,3,8,5,7,4,3&#125;;</span><br><span class="line">        bubbleSort(arr);</span><br><span class="line"></span><br><span class="line">        ArrayUtil.print(arr);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 冒泡排序</span><br><span class="line">     * @param arr</span><br><span class="line">     *&#x2F;</span><br><span class="line">    private static void bubbleSort(int[] arr) &#123;</span><br><span class="line">        for (int i &#x3D; 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">            for (int j &#x3D; 0; j &lt; arr.length - i -1; j++) &#123;   &#x2F;&#x2F; 这里说明为什么需要-1</span><br><span class="line">                if (arr[j] &gt; arr[j + 1]) &#123;</span><br><span class="line">                    int temp &#x3D; arr[j];</span><br><span class="line">                    arr[j] &#x3D; arr[j + 1];</span><br><span class="line">                    arr[j + 1] &#x3D; temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="接口的幂等性"><a href="#接口的幂等性" class="headerlink" title="接口的幂等性"></a>接口的幂等性</h3><p>系统A对系统B的接口进行多次调用所产生的结果和调用一次所产生的结果是一致的。<br>接口幂等性就是用户对于同一操作发起的一次请求或者多次请求的结果是一致的，不会因为多次点击而产生了副作用。</p>
+<ol>
+<li><strong>可能出现的情况</strong><br>在增删改查4个操作中，尤为注意就是增加或者修改  </li>
+</ol>
+<p><strong>查询操作</strong><br>查询对于结果是不会有改变的，查询一次和查询多次，在数据不变的情况下，查询结果是一样的。select是天然的幂等操作<br><strong>删除操作</strong><br>删除一次和多次删除都是把数据删除。(注意可能返回结果不一样，删除的数据不存在，返回0，删除的数据多条，返回结果多个,在不考虑返回结果的情况下,删除操作也是具有幂等性的)<br><strong>更新操作</strong><br>修改在大多场景下结果一样,但是如果是增量修改是需要保证幂等性的,如下例子:<br>把表中id为XXX的记录的A字段值设置为1,这种操作不管执行多少次都是幂等的<br>把表中id为XXX的记录的A字段值增加1,这种操作就不是幂等的<br><strong>新增操作</strong><br>增加在重复提交的场景下会出现幂等性问题,如以上的支付问题<br>2. <strong>如何设计？使用token机制</strong><br>token机制实现步骤:<br>（1）生成全局唯一的token,token放到redis或jvm内存,token会在页面跳转时获取.存放到pageScope中,支付请求提交先获取token<br>（2）提交后后台校验token，执行提交逻辑,提交成功同时删除token，生成新的token更新redis ,这样当第一次提交后token更新了,页面再次提交携带的token是已删除的token后台验证会失败不让提交。<br><strong>token特点</strong>：要申请，一次有效性，可以限流。<br>注意： redis要用删除操作来判断token，删除成功代表token校验通过，如果用select+delete来校验token，存在并发问题，不建议使用</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">soul</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.lianjinquan.com/2020/08/22/java/java%E5%9F%BA%E7%A1%80/">https://www.lianjinquan.com/2020/08/22/java/java%E5%9F%BA%E7%A1%80/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.lianjinquan.com" target="_blank">soul</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a></div><div class="post_share"><div class="social-share" data-image="https://i.erosouko.pub/2020/08/22/788a3ee228262.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/08/23/linux/linux/"><img class="prev-cover" data-lazy-src="https://i.erosouko.pub/2020/08/23/98952be2462a6.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">linux</div></div></a></div><div class="next-post pull-right"><a href="/2020/08/21/java/%E9%9B%86%E5%90%88/"><img class="next-cover" data-lazy-src="https://i.erosouko.pub/2020/08/22/da2890b37afeb.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">java集合</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2020/08/21/java/集合/" title="java集合"><img class="relatedPosts_cover" data-lazy-src="https://i.erosouko.pub/2020/08/22/da2890b37afeb.jpg"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-21</div><div class="relatedPosts_title">java集合</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 <i style="color:#FF6A6A;animation: announ_animation 0.8s linear infinite;" class="fa fa-heartbeat"></i> soul</div><div class="timeDate"><span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span></div><div class="github-badge"><a style="color: #fff" rel="license" href="https://hexo.io/" target="_blank" title="由 Hexo 强力驱动"><span class="badge-subject">Powered</span><span class="badge-value bg-blue">Hexo</span></a><a style="color: #fff" rel="license" href="https://gitee.com/" target="_blank" title="静态网页托管于 Gitee Pages"><span class="badge-subject">Hosted</span><span class="badge-value bg-brightgreen">码云</span></a><a style="color: #fff" rel="license" href="https://account.aliyun.com/" target="_blank" title="阿里云 提供 CDN 加速服务"><span class="badge-subject">CDN</span><span class="badge-value bg-orange">阿里云</span></a><a style="color: #fff" rel="license" href="https://jerryc.me" target="_blank" title="站点使用 Butterfly主题"><span class="badge-subject">Theme</span><span class="badge-value bg-blue">Butterfly</span></a><a style="color: #fff" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="本站点采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议进行许可"><span class="badge-subject"><i class="fa fa-copyright"></i></span><span class="badge-value bg-lightgrey">BY-NC-SA 4.0</span></a></div><div class="icp"><a target="_blank" rel="noopener" href="http://www.beian.miit.gov.cn"><img class="icp-icon" src="/img/icp.png"/><span>豫ICP备17024771号</span></a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.spacingElementById('content-inner')
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js', () => {
+      pangu.spacingElementById('content-inner')
+    })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguFn)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  var script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    window.valine = new Valine({
+      el: '#vcomment',
+      appId: '4mmf5rP5CM4lLiR0xbH9fTl0-gzGzoHsz',
+      appKey: 'f5uVeDfz1xfnN0cLwY92AUUt',
+      placeholder: '留下你的足迹吧',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    });
+    if ('nick,mail') { valine.config.requiredFields= 'nick,mail'.split(',') }
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script data-pjax src="/js/less.js"></script><script data-pjax src="/js/botui.js"></script><script data-pjax src="/js/timeDate.js"></script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><script src="/js/ip_content.js"></script><script defer="defer" id="ribbon_piao" mobile="true" src="/js/third-party/piao.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="/js/third-party/canvas-nest.js"></script><script src="/js/third-party/activate-power-mode.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script src="/js/third-party/ClickShowText.js" async="async"></script></div></body></html>
