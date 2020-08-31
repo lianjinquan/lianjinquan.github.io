@@ -129,31 +129,6 @@
     
     
     <entry>
-      <title>事务</title>
-      <link href="/2020/03/11/%E4%BA%8B%E5%8A%A1/%E4%BA%8B%E5%8A%A1/"/>
-      <url>/2020/03/11/%E4%BA%8B%E5%8A%A1/%E4%BA%8B%E5%8A%A1/</url>
-      
-        <content type="html"><![CDATA[<p>事务</p><a id="more"></a><h3 id="事物的4大特性-ACID"><a href="#事物的4大特性-ACID" class="headerlink" title="事物的4大特性(ACID)"></a>事物的4大特性(ACID)</h3><ol><li><strong>原子性</strong>  事务包含的所有操作要么全部成功，要么全部失败回滚;成功必须要完全应用到数据库，失败则不能对数据库产生影响；</li><li><strong>一致性</strong> 事务执行前和执行后必须处于一致性状态  </li></ol><p>例：用户A和用户B的钱加起来一共是5000; 无论AB用户之间是如何相互转换的，事务结束后两个用户的钱加起来还是5000,这就是事务的一致性。<br>3. <strong>隔离性</strong> 当多个用户并发访问数据库时，数据库为每一个用户开启的事务，不被其他事务的操作所干扰，多个并发事务之间要相互隔离；当多个线程都开启事务来操作数据库中的数据时，数据库系统要进行隔离操作，以保证各个线程获取数据的准确性。<br>4. <strong>持久性</strong> 一个事务一旦被提交了，那么对数据库中的数据的改变就是永久性的，即便在数据库系统遇到故障的情况下也不会丢失事物的操作。</p><h5 id="脏读"><a href="#脏读" class="headerlink" title="脏读"></a>脏读</h5><ul><li>是指一个事务处理过程里读取了另一个未提交的事务中的数据，然后使用了这个数据；</li><li>一个事务正在访问数据，并且对数据进行了修改，而这种修改还没有提交到数据库中，这时，另外一个事务也访问这个数据，然后使用了这个数据。</li><li>一个事务A读取了被另一个事务B修改，但是还未提交 的数据。假如B回退，则事务A读取的是无效的数据</li><li>当一个事务读取其它完成一半事务的记录时，就会发生脏读取。例如：用户A,B看到的值都是6，用户B把值改为2，用户A读到的值仍为6。</li></ul><h5 id="不可重复读"><a href="#不可重复读" class="headerlink" title="不可重复读"></a>不可重复读</h5><ul><li>不可重复读是指在一个事务内，多次读取同一个数据，在这个事务还没有结束 ，另一个事务也访问该同一数据，但是由于第二个事务的修改，那么第一个事务两次读取的数据可能不一样，因此称为不可重复读；即同一个事务中原始数据读取不可重复。这样就发生了在一个事务内两次读到的数据是不一样的 </li><li>一个事务范围内两个相同的查询却返回了不同数据</li></ul><h5 id="幻读"><a href="#幻读" class="headerlink" title="幻读"></a>幻读</h5><p>当事务不是独立执行时发生的一种现象，例如第一个事务对一个表中的数据进行修改，这种数据涉及到表中的全部数据行，同时，第二个事务也对这个表数据进行修改，这个修改是对表中新增/删除一条数据，那么操作第一个事务的用户发现表中的数据还没有修改的数据行，就好像发生了幻觉一样，这就是发生了幻读。</p><p>注:幻读和不可重复读都读取另一条已经提交的事务，所不同的是不可重复读查询的都是同一数据项，而幻读针对的是一批数据整体。</p><h5 id="丢失更新"><a href="#丢失更新" class="headerlink" title="丢失更新"></a>丢失更新</h5><p>一个事务的更新覆盖了其它事务的更新结果，就是所谓的更新丢失。例如：用户A把值从6改为2，用户B把值从2改为6，则用户A丢失了他的更新。</p><h3 id="事物的四种隔离级别"><a href="#事物的四种隔离级别" class="headerlink" title="事物的四种隔离级别"></a>事物的四种隔离级别</h3><p><img src= "/img/loading.gif" data-lazy-src="/images/01.png" alt="事物的四种隔离级别"><br> 由低到高分别为<code>Read uncommitted 、Read committed 、Repeatable read 、Serializable</code> 。在事务的并发操作中可能会出现脏读，不可重复读，幻读</p><ul><li><code>Read uncommitted(读未提交)</code>：最低级别，任何情况都会发生。</li><li><code>Read Committed(读已提交)</code>：可避免脏读的发生。</li><li><code>Repeatable read(可重复读)</code>：可避免脏读、不可重复读的发生。</li><li><code>Serializable(串行化)</code>：避免脏读、不可重复读，幻读的发生。<br>注： 四种隔离级别最高：Seralizable级别，最低的是Read uncommitted级别; 级别越高，执行效率就越低; 隔离级别的设置只对当前链接有效，对JDBC操作数据库来说，一个Connection对象相当于一个链接，只对该Connection对象设置的隔离级别只对该connection对象有效，与其它链接connection对象无关。</li></ul><h5 id="Read-uncommitted-读未提交"><a href="#Read-uncommitted-读未提交" class="headerlink" title="Read uncommitted 读未提交"></a>Read uncommitted 读未提交</h5><p>一个事务可以读取另一个未提交事务的数据。<br>事务A和事务B，事务A未提交的数据，事务B可以读取到，这里读到的数据可以被称为“脏读”，最低的隔离级别，这种级别一般是理论存在，数据库默认的隔离级别一般都是高于该级别的。</p><h5 id="Read-committed-读已提交"><a href="#Read-committed-读已提交" class="headerlink" title="Read committed 读已提交"></a>Read committed 读已提交</h5><p>一个事务要等另一个事务提交后才能读取数据。<br>事务A和事务B，事务A提交的数据，事务B才能读取到。这种隔离级别高于上面的读未提交，意思是：对方事务提交之后的数据，我当前事务才能够读取到。这种隔离级别可以避免脏数据，但是会导致“不可重复读”。</p><p>假设事务1读取了一条记录<code>select user_name from user where user_id = 1</code>,得到<code>user_name = &#39;456&#39;</code>,事务1暂时没提交。事务2更新了一条记录<code>update user set user_name = &#39;123&#39; where user_id = 1</code>,事务2提交。此时事务1再次<code>select user_name from user where user_id = 1</code>得到了<code>user_name = &#39;123&#39;</code>,这样就导致事务1在读取同一行数据却得到不同的user_name。这就是所谓的不可以重复读。<br>若有事务对数据进行更新（UPDATE）操作时，读操作事务要等待这个更新操作事务提交后才能读取数据，可以解决脏读问题。</p><h5 id="Repeatable-read-可重复读"><a href="#Repeatable-read-可重复读" class="headerlink" title="Repeatable read 可重复读"></a>Repeatable read 可重复读</h5><p>在开始读取数据（事务开启）时，不再允许修改操作。</p><p>事务A和事务B，事务A提交之后的数据，事务B读取不到。事务B是可重复读取数据的，这种隔离级别高于读已提交，意思是：对方提交之后的数据我还是读取不到。这种隔离级别可以避免“不可重复读取”，达到可重复读取，但是会导致“幻读”。<br>这个跟不可重复读相反,当事务1查询到user_name=’456’时，事务2将user_name更新成’123’并提交，事务1再次查询还是会发现user_name=’456’,这样保证了可重复读。幻读的话就是当事务2插入一条新的数据id为2并提交，事务1由于可重复读的性质，只能在表中查到id为1的数据，如果此时事务1插入id为2的数据则会产生错误，因为此时表中已经有了id为2的数据,但是事务1只看到了id为1的数据。<br>重复读可以解决不可重复读问题。写到这里，应该明白的一点就是，不可重复读对应的是修改，即UPDATE操作。但是可能还会有幻读问题。因为幻读问题对应的是插入INSERT操作，而不是UPDATE操作。 </p><h5 id="Serializabale-串行化"><a href="#Serializabale-串行化" class="headerlink" title="Serializabale 串行化"></a>Serializabale 串行化</h5><p>Serializable 是最高的事务隔离级别，在该级别下，事务串行化顺序执行，可以避免脏读、不可重复读与幻读。但是这种事务隔离级别效率低下，比较耗数据库性能，一般不使用。</p><h5 id="默认隔离级别"><a href="#默认隔离级别" class="headerlink" title="默认隔离级别"></a>默认隔离级别</h5><p>mysql的默认隔离级别是repeatable read。<br>oracle只支持seralizable(串行化)级别和Read committed();<br>oracle的默认隔离级别是read committed。</p><h3 id="事物的7种传播行为"><a href="#事物的7种传播行为" class="headerlink" title="事物的7种传播行为"></a>事物的7种传播行为</h3><h5 id="propagation-required"><a href="#propagation-required" class="headerlink" title="propagation_required"></a>propagation_required</h5><p>如果当前没有事务，就创建一个新事务，如果当前存在事务，就加入该事务，该设置是最常用的设置。</p><h5 id="propagation-supports"><a href="#propagation-supports" class="headerlink" title="propagation_supports"></a>propagation_supports</h5><p>支持当前事务，如果当前存在事务，就加入该事务，如果当前不存在事务，就以非事务执行。</p><h5 id="propagation-mandatory"><a href="#propagation-mandatory" class="headerlink" title="propagation_mandatory"></a>propagation_mandatory</h5><p>支持当前事务，如果当前存在事务，就加入该事务，如果当前不存在事务，就抛出异常。</p><h5 id="propagation-requires-new"><a href="#propagation-requires-new" class="headerlink" title="propagation_requires_new"></a>propagation_requires_new</h5><p>创建新事务，无论当前存不存在事务，都创建新事务。</p><h5 id="propagation-not-supported"><a href="#propagation-not-supported" class="headerlink" title="propagation_not_supported"></a>propagation_not_supported</h5><p>以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。</p><h5 id="propagation-never"><a href="#propagation-never" class="headerlink" title="propagation_never"></a>propagation_never</h5><p>以非事务方式执行，如果当前存在事务，则抛出异常。</p><h5 id="propagation-nested"><a href="#propagation-nested" class="headerlink" title="propagation_nested"></a>propagation_nested</h5><p>如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则执行与propagation_required类似的操作。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 事务 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 事务 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>springboot</title>
       <link href="/2020/03/11/spring%20boot/springboot/"/>
       <url>/2020/03/11/spring%20boot/springboot/</url>
@@ -171,6 +146,31 @@
         <tags>
             
             <tag> springboot </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>事务</title>
+      <link href="/2020/03/11/%E4%BA%8B%E5%8A%A1/%E4%BA%8B%E5%8A%A1/"/>
+      <url>/2020/03/11/%E4%BA%8B%E5%8A%A1/%E4%BA%8B%E5%8A%A1/</url>
+      
+        <content type="html"><![CDATA[<p>事务</p><a id="more"></a><h3 id="事物的4大特性-ACID"><a href="#事物的4大特性-ACID" class="headerlink" title="事物的4大特性(ACID)"></a>事物的4大特性(ACID)</h3><ol><li><strong>原子性</strong>  事务包含的所有操作要么全部成功，要么全部失败回滚;成功必须要完全应用到数据库，失败则不能对数据库产生影响；</li><li><strong>一致性</strong> 事务执行前和执行后必须处于一致性状态  </li></ol><p>例：用户A和用户B的钱加起来一共是5000; 无论AB用户之间是如何相互转换的，事务结束后两个用户的钱加起来还是5000,这就是事务的一致性。<br>3. <strong>隔离性</strong> 当多个用户并发访问数据库时，数据库为每一个用户开启的事务，不被其他事务的操作所干扰，多个并发事务之间要相互隔离；当多个线程都开启事务来操作数据库中的数据时，数据库系统要进行隔离操作，以保证各个线程获取数据的准确性。<br>4. <strong>持久性</strong> 一个事务一旦被提交了，那么对数据库中的数据的改变就是永久性的，即便在数据库系统遇到故障的情况下也不会丢失事物的操作。</p><h5 id="脏读"><a href="#脏读" class="headerlink" title="脏读"></a>脏读</h5><ul><li>是指一个事务处理过程里读取了另一个未提交的事务中的数据，然后使用了这个数据；</li><li>一个事务正在访问数据，并且对数据进行了修改，而这种修改还没有提交到数据库中，这时，另外一个事务也访问这个数据，然后使用了这个数据。</li><li>一个事务A读取了被另一个事务B修改，但是还未提交 的数据。假如B回退，则事务A读取的是无效的数据</li><li>当一个事务读取其它完成一半事务的记录时，就会发生脏读取。例如：用户A,B看到的值都是6，用户B把值改为2，用户A读到的值仍为6。</li></ul><h5 id="不可重复读"><a href="#不可重复读" class="headerlink" title="不可重复读"></a>不可重复读</h5><ul><li>不可重复读是指在一个事务内，多次读取同一个数据，在这个事务还没有结束 ，另一个事务也访问该同一数据，但是由于第二个事务的修改，那么第一个事务两次读取的数据可能不一样，因此称为不可重复读；即同一个事务中原始数据读取不可重复。这样就发生了在一个事务内两次读到的数据是不一样的 </li><li>一个事务范围内两个相同的查询却返回了不同数据</li></ul><h5 id="幻读"><a href="#幻读" class="headerlink" title="幻读"></a>幻读</h5><p>当事务不是独立执行时发生的一种现象，例如第一个事务对一个表中的数据进行修改，这种数据涉及到表中的全部数据行，同时，第二个事务也对这个表数据进行修改，这个修改是对表中新增/删除一条数据，那么操作第一个事务的用户发现表中的数据还没有修改的数据行，就好像发生了幻觉一样，这就是发生了幻读。</p><p>注:幻读和不可重复读都读取另一条已经提交的事务，所不同的是不可重复读查询的都是同一数据项，而幻读针对的是一批数据整体。</p><h5 id="丢失更新"><a href="#丢失更新" class="headerlink" title="丢失更新"></a>丢失更新</h5><p>一个事务的更新覆盖了其它事务的更新结果，就是所谓的更新丢失。例如：用户A把值从6改为2，用户B把值从2改为6，则用户A丢失了他的更新。</p><h3 id="事物的四种隔离级别"><a href="#事物的四种隔离级别" class="headerlink" title="事物的四种隔离级别"></a>事物的四种隔离级别</h3><p><img src= "/img/loading.gif" data-lazy-src="/images/01.png" alt="事物的四种隔离级别"><br> 由低到高分别为<code>Read uncommitted 、Read committed 、Repeatable read 、Serializable</code> 。在事务的并发操作中可能会出现脏读，不可重复读，幻读</p><ul><li><code>Read uncommitted(读未提交)</code>：最低级别，任何情况都会发生。</li><li><code>Read Committed(读已提交)</code>：可避免脏读的发生。</li><li><code>Repeatable read(可重复读)</code>：可避免脏读、不可重复读的发生。</li><li><code>Serializable(串行化)</code>：避免脏读、不可重复读，幻读的发生。<br>注： 四种隔离级别最高：Seralizable级别，最低的是Read uncommitted级别; 级别越高，执行效率就越低; 隔离级别的设置只对当前链接有效，对JDBC操作数据库来说，一个Connection对象相当于一个链接，只对该Connection对象设置的隔离级别只对该connection对象有效，与其它链接connection对象无关。</li></ul><h5 id="Read-uncommitted-读未提交"><a href="#Read-uncommitted-读未提交" class="headerlink" title="Read uncommitted 读未提交"></a>Read uncommitted 读未提交</h5><p>一个事务可以读取另一个未提交事务的数据。<br>事务A和事务B，事务A未提交的数据，事务B可以读取到，这里读到的数据可以被称为“脏读”，最低的隔离级别，这种级别一般是理论存在，数据库默认的隔离级别一般都是高于该级别的。</p><h5 id="Read-committed-读已提交"><a href="#Read-committed-读已提交" class="headerlink" title="Read committed 读已提交"></a>Read committed 读已提交</h5><p>一个事务要等另一个事务提交后才能读取数据。<br>事务A和事务B，事务A提交的数据，事务B才能读取到。这种隔离级别高于上面的读未提交，意思是：对方事务提交之后的数据，我当前事务才能够读取到。这种隔离级别可以避免脏数据，但是会导致“不可重复读”。</p><p>假设事务1读取了一条记录<code>select user_name from user where user_id = 1</code>,得到<code>user_name = &#39;456&#39;</code>,事务1暂时没提交。事务2更新了一条记录<code>update user set user_name = &#39;123&#39; where user_id = 1</code>,事务2提交。此时事务1再次<code>select user_name from user where user_id = 1</code>得到了<code>user_name = &#39;123&#39;</code>,这样就导致事务1在读取同一行数据却得到不同的user_name。这就是所谓的不可以重复读。<br>若有事务对数据进行更新（UPDATE）操作时，读操作事务要等待这个更新操作事务提交后才能读取数据，可以解决脏读问题。</p><h5 id="Repeatable-read-可重复读"><a href="#Repeatable-read-可重复读" class="headerlink" title="Repeatable read 可重复读"></a>Repeatable read 可重复读</h5><p>在开始读取数据（事务开启）时，不再允许修改操作。</p><p>事务A和事务B，事务A提交之后的数据，事务B读取不到。事务B是可重复读取数据的，这种隔离级别高于读已提交，意思是：对方提交之后的数据我还是读取不到。这种隔离级别可以避免“不可重复读取”，达到可重复读取，但是会导致“幻读”。<br>这个跟不可重复读相反,当事务1查询到user_name=’456’时，事务2将user_name更新成’123’并提交，事务1再次查询还是会发现user_name=’456’,这样保证了可重复读。幻读的话就是当事务2插入一条新的数据id为2并提交，事务1由于可重复读的性质，只能在表中查到id为1的数据，如果此时事务1插入id为2的数据则会产生错误，因为此时表中已经有了id为2的数据,但是事务1只看到了id为1的数据。<br>重复读可以解决不可重复读问题。写到这里，应该明白的一点就是，不可重复读对应的是修改，即UPDATE操作。但是可能还会有幻读问题。因为幻读问题对应的是插入INSERT操作，而不是UPDATE操作。 </p><h5 id="Serializabale-串行化"><a href="#Serializabale-串行化" class="headerlink" title="Serializabale 串行化"></a>Serializabale 串行化</h5><p>Serializable 是最高的事务隔离级别，在该级别下，事务串行化顺序执行，可以避免脏读、不可重复读与幻读。但是这种事务隔离级别效率低下，比较耗数据库性能，一般不使用。</p><h5 id="默认隔离级别"><a href="#默认隔离级别" class="headerlink" title="默认隔离级别"></a>默认隔离级别</h5><p>mysql的默认隔离级别是repeatable read。<br>oracle只支持seralizable(串行化)级别和Read committed();<br>oracle的默认隔离级别是read committed。</p><h3 id="事物的7种传播行为"><a href="#事物的7种传播行为" class="headerlink" title="事物的7种传播行为"></a>事物的7种传播行为</h3><h5 id="propagation-required"><a href="#propagation-required" class="headerlink" title="propagation_required"></a>propagation_required</h5><p>如果当前没有事务，就创建一个新事务，如果当前存在事务，就加入该事务，该设置是最常用的设置。</p><h5 id="propagation-supports"><a href="#propagation-supports" class="headerlink" title="propagation_supports"></a>propagation_supports</h5><p>支持当前事务，如果当前存在事务，就加入该事务，如果当前不存在事务，就以非事务执行。</p><h5 id="propagation-mandatory"><a href="#propagation-mandatory" class="headerlink" title="propagation_mandatory"></a>propagation_mandatory</h5><p>支持当前事务，如果当前存在事务，就加入该事务，如果当前不存在事务，就抛出异常。</p><h5 id="propagation-requires-new"><a href="#propagation-requires-new" class="headerlink" title="propagation_requires_new"></a>propagation_requires_new</h5><p>创建新事务，无论当前存不存在事务，都创建新事务。</p><h5 id="propagation-not-supported"><a href="#propagation-not-supported" class="headerlink" title="propagation_not_supported"></a>propagation_not_supported</h5><p>以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。</p><h5 id="propagation-never"><a href="#propagation-never" class="headerlink" title="propagation_never"></a>propagation_never</h5><p>以非事务方式执行，如果当前存在事务，则抛出异常。</p><h5 id="propagation-nested"><a href="#propagation-nested" class="headerlink" title="propagation_nested"></a>propagation_nested</h5><p>如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则执行与propagation_required类似的操作。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 事务 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 事务 </tag>
             
         </tags>
       
