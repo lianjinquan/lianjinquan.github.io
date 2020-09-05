@@ -201,7 +201,7 @@ template {
 #aside_content .aside-list > .aside-list-item .content > .title,
 #aside_content .aside-list > .aside-list-item .content > .comment,
 #page-header.post-bg #post-info #post-title .posttitle,
-.relatedPosts .relatedPosts_main .relatedPosts_title,
+.relatedPosts > .relatedPosts-list .content .title,
 figure.gallery-group p,
 figure.gallery-group .gallery-group-name {
   display: -webkit-box;
@@ -1914,7 +1914,7 @@ blockquote footer cite:before {
 #article-container .highlight-tools .code-lang {
   position: absolute;
   left: 0.7rem;
-  text-transform: capitalize;
+  text-transform: uppercase;
   font-weight: bold;
   font-size: 1.15em;
 }
@@ -2590,6 +2590,10 @@ blockquote footer cite:before {
 #aside_content .item-headline span {
   margin-left: 0.5rem;
 }
+#aside_content .item-headline + div,
+#aside_content .item-headline + ul {
+  padding: 0.3rem 0 0;
+}
 @media screen and (min-width: 900px) {
   #aside_content .sticky_layout {
     position: sticky;
@@ -2603,9 +2607,6 @@ blockquote footer cite:before {
 }
 #aside_content .card-tag-cloud a:hover {
   color: #49b1f5 !important;
-}
-#aside_content .aside-list {
-  margin: 10px 0 -15px;
 }
 #aside_content .aside-list > span {
   display: block;
@@ -2634,7 +2635,7 @@ blockquote footer cite:before {
   border-bottom: 1px dashed #f5f5f5;
 }
 #aside_content .aside-list > .aside-list-item:last-child {
-  margin-bottom: 0.3rem;
+  padding-bottom: 0;
 }
 #aside_content .aside-list > .aside-list-item .thumbnail {
   overflow: hidden;
@@ -2697,7 +2698,6 @@ blockquote footer cite:before {
 #aside_content .card-archives ul.card-archive-list,
 #aside_content .card-categories ul.card-category-list {
   margin: 0;
-  padding: 0.2rem 0 0;
   list-style: none;
 }
 #aside_content .card-archives ul.card-archive-list > .card-archive-list-item a,
@@ -2777,9 +2777,6 @@ blockquote footer cite:before {
   -ms-transform: rotate(-90deg);
   transform: rotate(-90deg);
 }
-#aside_content .card-webinfo .webinfo {
-  padding: 0.2rem 0.5rem;
-}
 #aside_content .card-webinfo .webinfo .webinfo-item {
   display: -webkit-box;
   display: -moz-box;
@@ -2793,7 +2790,7 @@ blockquote footer cite:before {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
-  padding: 4px 0 0;
+  padding: 0.1rem 0.5rem 0;
 }
 #aside_content .card-webinfo .webinfo .webinfo-item div:first-child {
   -webkit-box-flex: 1;
@@ -3254,7 +3251,7 @@ _:future,
     padding: 0 16px;
   }
 }
-#nav:not(.fixed) .menus {
+#nav:not(.fixed) #menus {
   padding-right: 0 !important;
 }
 #nav #blog_name {
@@ -3266,12 +3263,12 @@ _:future,
   -ms-flex: 1;
   flex: 1;
 }
-#nav .toggle-menu {
+#nav #toggle-menu {
   display: none;
   padding: 0.1rem 0 0 0.3rem;
   vertical-align: top;
 }
-#nav .toggle-menu:hover {
+#nav #toggle-menu:hover {
   color: var(--white);
 }
 #nav a {
@@ -3295,13 +3292,13 @@ _:future,
 }
 #nav.fixed a,
 #nav.fixed #site-name,
-#nav.fixed .toggle-menu {
+#nav.fixed #toggle-menu {
   color: var(--font-color);
   text-shadow: none;
 }
 #nav.fixed a:hover,
 #nav.fixed #site-name:hover,
-#nav.fixed .toggle-menu:hover {
+#nav.fixed #toggle-menu:hover {
   color: #49b1f5;
 }
 #nav.visible {
@@ -3402,10 +3399,10 @@ _:future,
   color: var(--font-color);
   text-shadow: none;
 }
-#nav.hide-menu .toggle-menu {
+#nav.hide-menu #toggle-menu {
   display: inline-block !important;
 }
-#nav.hide-menu .toggle-menu .site-page {
+#nav.hide-menu #toggle-menu .site-page {
   font-size: inherit;
 }
 #nav.hide-menu .menus_items {
@@ -4033,12 +4030,12 @@ img {
 .relatedPosts {
   margin-top: 1rem;
 }
-.relatedPosts .relatedPosts_headline {
+.relatedPosts > .headline {
   margin-bottom: 5px;
   font-weight: 700;
   font-size: 1.43em;
 }
-.relatedPosts .relatedPosts_item {
+.relatedPosts > .relatedPosts-list > div {
   position: relative;
   display: inline-block;
   overflow: hidden;
@@ -4048,7 +4045,7 @@ img {
   background: #000;
   vertical-align: bottom;
 }
-.relatedPosts .relatedPosts_item:hover .relatedPosts_cover {
+.relatedPosts > .relatedPosts-list > div:hover .cover {
   opacity: 0.8;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
   filter: alpha(opacity=80);
@@ -4059,18 +4056,18 @@ img {
   transform: scale(1.1);
 }
 @media screen and (max-width: 768px) {
-  .relatedPosts .relatedPosts_item {
+  .relatedPosts > .relatedPosts-list > div {
     margin: 2px;
     width: calc(50% - 4px);
     height: 150px;
   }
 }
 @media screen and (max-width: 600px) {
-  .relatedPosts .relatedPosts_item {
+  .relatedPosts > .relatedPosts-list > div {
     width: calc(100% - 4px);
   }
 }
-.relatedPosts .relatedPosts_cover {
+.relatedPosts > .relatedPosts-list .cover {
   width: 100%;
   height: 100%;
   opacity: 0.4;
@@ -4083,7 +4080,7 @@ img {
   transition: all 0.6s;
   object-fit: cover;
 }
-.relatedPosts .relatedPosts_main {
+.relatedPosts > .relatedPosts-list .content {
   position: absolute;
   top: 50%;
   padding: 0 1rem;
@@ -4094,11 +4091,11 @@ img {
   -ms-transform: translate(0, -50%);
   transform: translate(0, -50%);
 }
-.relatedPosts .relatedPosts_main .relatedPosts_date {
+.relatedPosts > .relatedPosts-list .content .date {
   color: var(--light-grey);
   font-size: 90%;
 }
-.relatedPosts .relatedPosts_main .relatedPosts_title {
+.relatedPosts > .relatedPosts-list .content .title {
   color: var(--white);
   -webkit-line-clamp: 2;
 }
