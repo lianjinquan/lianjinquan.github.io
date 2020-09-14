@@ -423,7 +423,16 @@ body {
     background: rgba(255,255,255,.3);
 }
 
-
+/*阅读模式的背景与字体*/
+.read-mode{
+    /* 字体大小 */
+    font-size:17px;
+    /* 可以在这里引入自定义字体，具体方法请自行百度css引入字体 */
+}
+.read-mode #web_bg{
+    /* 背景颜色 */
+    background:#fdf6e3;
+}
 
 
 
