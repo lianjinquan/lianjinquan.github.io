@@ -29,7 +29,7 @@ $(function () {
   const initAdjust = () => {
     if (window.innerWidth < 768) adjustMenu(0)
     else adjustMenu(2)
-    $('#nav').css({ opacity: '1', animation: 'headerNoOpacity 1s' })
+    $('#nav').addClass('show')
   }
 
   /**
@@ -186,7 +186,7 @@ $(function () {
  * 首頁top_img底下的箭頭
  */
   const scrollDownInIndex = () => {
-    $('#scroll_down').on('click', function () {
+    $('#scroll-down').on('click', function () {
       btf.scrollToDest('#content-inner')
     })
   }
@@ -657,22 +657,6 @@ $(function () {
   }
 
   /**
- * 百度推送
- */
-  const pushToBaidu = () => {
-    const bp = document.createElement('script')
-    const curProtocol = window.location.protocol.split(':')[0]
-    if (curProtocol === 'https') {
-      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'
-    } else {
-      bp.src = 'http://push.zhanzhang.baidu.com/push.js'
-    }
-    bp.dataset.pjax = ''
-    const s = document.getElementsByTagName('script')[0]
-    s.parentNode.insertBefore(bp, s)
-  }
-
-  /**
  * tag-hide
  */
   const clickFnOfTagHide = function () {
@@ -725,20 +709,19 @@ $(function () {
     const $cardCategory = $('#aside-cat-list .card-category-list-item.parent i')
     $cardCategory.on('click', function (e) {
       e.preventDefault()
-      const $this = $(this)
-      $this.toggleClass('expand')
-      $this.parents('.parent').next().toggle()
+      $(this).toggleClass('expand').parents('.parent').next().slideToggle(300)
     })
   }
 
   const switchComments = function () {
     let switchDone = false
     $('#switch-comments-btn').on('click', function () {
-      $('#post-comment > .comment-wrap > div').each(function () {
-        if ($(this).is(':visible')) {
-          $(this).hide()
+      $('#post-comment > .comment-wrap > div').each(function (i, o) {
+        const $this = $(o)
+        if ($this.is(':visible')) {
+          $this.hide()
         } else {
-          $(this).css({
+          $this.css({
             display: 'block',
             animation: 'tabshow .5s'
           })
@@ -790,7 +773,6 @@ $(function () {
     clickFnOfSubMenu()
     GLOBAL_CONFIG.islazyload && lazyloadImg()
     GLOBAL_CONFIG.copyright !== undefined && addCopyright()
-    GLOBAL_CONFIG.baiduPush && pushToBaidu()
   }
 
   window.refreshFn = function () {
