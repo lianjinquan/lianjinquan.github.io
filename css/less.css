@@ -1,25 +1,3 @@
-/* 自定义字体*/
-@font-face {
-    font-family: 'sleek';
-    src: url('https://cdn.jsdelivr.net/gh/lete114/CDN2/zaxiang/sleek.woff2');
-}
-
-/* 隐藏回到顶部按钮，替换为up酱 */
-
-#go-up i {
-    display: none;
-    background-color: transparent !important;
-}
-
-#go-up {
-    background-color: transparent !important;
-}
-
-#upj {
-    transform: translate(-70px, -80px) !important;
-}
-
-
 /* 目录隐藏按钮颜色-也就是左下角的那个按钮 */
 
 #toggle-sidebar {
@@ -95,13 +73,6 @@
 /* 评论框 end  */
 
 
-/* 页脚透明 */
-
-/*#footer {*/
-/*    background: transparent !important;*/
-/*}*/
-
-
 /* a标签默认颜色 */
 
 #article-container a {
@@ -141,22 +112,11 @@ a {
     color: #00c4b6;
 }
 
-
-/*移动端优化：去除归档、标签、最新文章、公告、、只保留网站统计
-
-@media screen and (max-width: 800px) {
-    #aside_content div:not(:last-child) {
-        display: none;
-        font-size: 13px;
-    }
-}
-*/
-
 /* 鼠标样式 start*/
 /* 鼠标图标 */
 
 body {
-    cursor: url(https://cdn.jsdelivr.net/gh/sviptzk/HexoStaticFile@latest/Hexo/img/default.cur), auto;
+    cursor: url(https://cdn.lianjinquan.com/mouse/default.cur), auto;
 }
 
 /*!*a标签*!*/
@@ -233,14 +193,6 @@ body {
 /*#upj:hover {*/
 /*    cursor: url(https://cdn.jsdelivr.net/gh/lete114/CDN@1.0/Use/JkuClT.png), auto;*/
 /*}*/
-
-
-/*!*页脚a标签*!*/
-
-#footer-wrap a:hover {
-    text-decoration: none;
-    cursor: url(https://cdn.jsdelivr.net/gh/lete114/CDN@1.0/Use/JkuClT.png), auto;
-}
 
 
 /*!*分页器*!*/
@@ -340,18 +292,6 @@ body {
 }
 
 /* 打字效果渐变 end */
-
-/*鼠标样式*/
-/*body {*/
-/*    cursor: url(https://cdn.jsdelivr.net/gh/sviptzk/HexoStaticFile@latest/Hexo/img/default.cur),*/
-/*        default;*/
-/*}*/
-/*a,*/
-/*img {*/
-/*    cursor: url(https://cdn.jsdelivr.net/gh/sviptzk/HexoStaticFile@latest/Hexo/img/pointer.cur),*/
-/*        default;*/
-/*}*/
-
 
 /*背景渐变*/
 #web_bg {
