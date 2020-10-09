@@ -3038,7 +3038,6 @@ blockquote footer cite:before {
   position: relative;
   width: 100%;
   background-color: #49b1f5;
-  background-attachment: scroll;
   background-position: center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -5379,18 +5378,14 @@ blockquote.pullquote.right {
   --reward-pop: #2c2c2c;
   --sidebar-icon-color: rgba(255,255,255,0.7);
 }
-[data-theme='dark'] #web_bg[data-type=color] {
-  background: #0d0d0d;
-}
-[data-theme='dark'] #web_bg[data-type=photo]:before {
+[data-theme='dark'] #web_bg:before,
+[data-theme='dark'] #footer:before,
+[data-theme='dark'] #page-header:before {
   position: absolute;
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.7);
   content: '';
-}
-[data-theme='dark'] #footer:before {
-  background-color: rgba(0,0,0,0.7);
 }
 [data-theme='dark'] #article-container code {
   background: #2c2c2c;
@@ -5401,15 +5396,8 @@ blockquote.pullquote.right {
 [data-theme='dark'] #article-container .note code {
   background: rgba(27,31,35,0.05);
 }
-[data-theme='dark'] #page-header:before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.7);
-  content: '';
+[data-theme='dark'] #article-container .aplayer {
+  filter: brightness(0.8);
 }
 [data-theme='dark'] #page-header > #nav.fixed,
 [data-theme='dark'] #page-header.no-top-img #nav {
@@ -5458,8 +5446,7 @@ blockquote.pullquote.right {
 [data-theme='dark'] .error-img,
 [data-theme='dark'] #article-container iframe,
 [data-theme='dark'] img,
-[data-theme='dark'] .gist,
-[data-theme='dark'] .aplayer {
+[data-theme='dark'] .gist {
   filter: brightness(0.8);
 }
 [data-theme='dark'] #aside_content .aside-list > .aside-list-item:not(:last-child) {
