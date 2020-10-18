@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>运行时数据区概述及线程</title>
+      <link href="/2020/10/11/jvm/jvm03/"/>
+      <url>/2020/10/11/jvm/jvm03/</url>
+      
+        <content type="html"><![CDATA[<p>运行时数据区概述及线程</p><a id="more"></a><h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>运行时数据区，也就是下图这部分，它是类加载完成后的阶段<br><img src="https://cdn.lianjinquan.com/img/posts/jvm/03/jvm01.png"><br>当我们通过前面的：类的加载-&gt; 验证 -&gt; 准备 -&gt; 解析 -&gt; 初始化 这几个阶段完成后，就会用到执行引擎对我们的类进行使用，同时执行引擎将会使用到我们运行时数据区<br><img src="https://cdn.lianjinquan.com/img/posts/jvm/03/jvm02.png"><br>也就是大厨做饭，我们把大厨后面的东西（切好的菜，刀，调料），比作是运行时数据区。而厨师可以类比于执行引擎，将通过准备的东西进行制作成精美的菜品<br><img src="https://cdn.lianjinquan.com/img/posts/jvm/03/jvm03.png"></p><p>内存是非常重要的系统资源，是硬盘和CPU的中间仓库及桥梁，承载着操作系统和应用程序的实时运行JVM内存布局规定了Java在运行过程中内存申请、分配、管理的策略，保证了JVM的高效稳定运行。不同的JVM对于内存的划分方式和管理机制存在着部分差异。</p><p>我们通过磁盘或者网络IO得到的数据，都需要先加载到内存中，然后CPU从内存中获取数据进行读取，也就是说内存充当了CPU和磁盘之间的桥梁</p><p>运行时数据区的完整图<br><img src="https://cdn.lianjinquan.com/img/posts/jvm/03/jvm04.png"></p><p>Java虚拟机定义了若干种程序运行期间会使用到的运行时数据区，其中有一些会随着虚拟机启动而创建，随着虚拟机退出而销毁。另外一些则是与线程一一对应的，这些与线程对应的数据区域会随着线程开始和结束而创建和销毁。</p><p>灰色的为单独线程私有的，红色的为多个线程共享的。即：</p><ul><li>每个线程：独立包括程序计数器、栈、本地栈。</li><li>线程间共享：堆、堆外内存（永久代或元空间、代码缓存）<br><img src="https://cdn.lianjinquan.com/img/posts/jvm/03/jvm05.png"></li></ul><h1 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h1><p>线程是一个程序里的运行单元。JVM允许一个应用有多个线程并行的执行。 在Hotspot JVM里，每个线程都与操作系统的本地线程直接映射。<br>当一个Java线程准备好执行以后，此时一个操作系统的本地线程也同时创建。Java线程执行终止后，本地线程也会回收。<br>操作系统负责所有线程的安排调度到任何一个可用的CPU上。一旦本地线程初始化成功，它就会调用Java线程中的run（）方法。</p><h1 id="JVM系统线程"><a href="#JVM系统线程" class="headerlink" title="JVM系统线程"></a>JVM系统线程</h1><p>如果你使用console或者是任何一个调试工具，都能看到在后台有许多线程在运行。这些后台线程不包括调用public static void main（String[]）的main线程以及所有这个main线程自己创建的线程。</p><p>这些主要的后台系统线程在Hotspot JVM里主要是以下几个：</p><ul><li>虚拟机线程：这种线程的操作是需要JVM达到安全点才会出现。这些操作必须在不同的线程中发生的原因是他们都需要JVM达到安全点，这样堆才不会变化。这种线程的执行类型包括”stop-the-world”的垃圾收集，线程栈收集，线程挂起以及偏向锁撤销。</li><li>周期任务线程：这种线程是时间周期事件的体现（比如中断），他们一般用于周期性操作的调度执行。</li><li>GC线程：这种线程对在JVM里不同种类的垃圾收集行为提供了支持。</li><li>编译线程：这种线程在运行时会将字节码编译成到本地代码。</li><li>信号调度线程：这种线程接收信号并发送给JVM，在它内部通过调用适当的方法进行处理。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> jvm </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> jvm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>虚拟机栈</title>
+      <link href="/2020/10/11/jvm/jvm04/"/>
+      <url>/2020/10/11/jvm/jvm04/</url>
+      
+        <content type="html"><![CDATA[<p>虚拟机栈</p><a id="more"></a><h1 id="虚拟机栈概述"><a href="#虚拟机栈概述" class="headerlink" title="虚拟机栈概述"></a>虚拟机栈概述</h1><p>由于跨平台性的设计，Java的指令都是根据栈来设计的。不同平台CPU架构不同，所以不能设计为基于寄存器的。 优点是跨平台，指令集小，编译器容易实现，缺点是性能下降，实现同样的功能需要更多的指令。<br>有不少Java开发人员一提到Java内存结构，就会非常粗粒度地将JVM中的内存区理解为仅有Java堆（heap）和Java战（stack）？为什么？<br>首先栈是运行时的单位，而堆是存储的单位。</p><ul><li>栈解决程序的运行问题，即程序如何执行，或者说如何处理数据。</li><li>堆解决的是数据存储的问题，即数据怎么放，放哪里。<br><img src="https://cdn.lianjinquan.com/img/posts/jvm/04/jvm01.png"></li></ul><h1 id="Java虚拟机栈是什么"><a href="#Java虚拟机栈是什么" class="headerlink" title="Java虚拟机栈是什么"></a>Java虚拟机栈是什么</h1><p>Java虚拟机栈（Java Virtual Machine Stack），早期也叫Java栈。每个线程在创建时都会创建一个虚拟机栈，其内部保存一个个的栈帧（Stack Frame），对应着一次次的Java方法调用。</p><p>是线程私有的<br><img src="https://cdn.lianjinquan.com/img/posts/jvm/04/jvm02.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> jvm </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> jvm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>类加载子系统</title>
       <link href="/2020/09/20/jvm/jvm02/"/>
       <url>/2020/09/20/jvm/jvm02/</url>
