@@ -4378,25 +4378,34 @@ _:future,
   margin: 0;
   list-style: none;
 }
-#vcomment {
+#vcomment,
+#waline {
   font-size: 1.1em;
 }
-#vcomment .vbtn {
+#vcomment .vbtn,
+#waline .vbtn {
   border: none;
   background: var(--btn-bg);
   color: var(--btn-color);
 }
-#vcomment .vbtn:hover {
+#vcomment .vbtn:hover,
+#waline .vbtn:hover {
   background: var(--btn-hover-color);
 }
-#vcomment .vimg {
+#vcomment textarea:focus,
+#waline textarea:focus {
+  background-image: none;
+}
+#vcomment .vimg,
+#waline .vimg {
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -o-transition: all 0.3s;
   -ms-transition: all 0.3s;
   transition: all 0.3s;
 }
-#vcomment .vimg:hover {
+#vcomment .vimg:hover,
+#waline .vimg:hover {
   -webkit-transform: rotate(360deg);
   -moz-transform: rotate(360deg);
   -o-transform: rotate(360deg);
@@ -4404,8 +4413,13 @@ _:future,
   transform: rotate(360deg);
 }
 #vcomment .vcards .vcard .vcontent.expand:before,
-#vcomment .vcards .vcard .vcontent.expand:after {
+#waline .vcards .vcard .vcontent.expand:before,
+#vcomment .vcards .vcard .vcontent.expand:after,
+#waline .vcards .vcard .vcontent.expand:after {
   z-index: 22;
+}
+#waline textarea {
+  background: url("/image/comment_bg.png") 100% 100% no-repeat;
 }
 .fireworks {
   position: fixed;
