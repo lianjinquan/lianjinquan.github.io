@@ -1,0 +1,801 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>linux用户和用户组管理 | lianjinquan</title><meta name="keywords" content="linux"><meta name="author" content="lianjinquan"><meta name="copyright" content="lianjinquan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="linux用户和用户组管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux用户和用户组管理">
+<meta property="og:url" content="https://www.lianjinquan.com/2020/12/24/linux/linux04/index.html">
+<meta property="og:site_name" content="lianjinquan">
+<meta property="og:description" content="linux用户和用户组管理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.lianjinquan.com/img/img/top-img/2034045.jpg">
+<meta property="article:published_time" content="2020-12-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-24T11:27:35.856Z">
+<meta property="article:author" content="lianjinquan">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.lianjinquan.com/img/img/top-img/2034045.jpg"><link rel="shortcut icon" href="https://cdn.lianjinquan.com/img/img/favicon.jpg"><link rel="canonical" href="https://www.lianjinquan.com/2020/12/24/linux/linux04/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="https://cdn.lianjinquan.com/css/Rindex.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-12-24 19:27:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><link rel="stylesheet" href="/css/less.css"><link rel="stylesheet" href="/css/custom.css"><div class="aplayer" data-type="playlist" data-fixed data-listFolded="false" data-order="list" data-preload="auto"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lete114/CDN/music/APlayer/APlayer.min.css"><script src="https://cdn.jsdelivr.net/gh/lete114/CDN/music/APlayer/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/meting@1.2.0/dist/Meting.min.js"></script><meta name="generator" content="Hexo 5.0.2"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://cdn.lianjinquan.com/img/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page" href="/ebook/"><i class="fa-fw fas fa-folder-open"></i><span> 电子书</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://cdn.lianjinquan.com/html/loveIndex.html"><i class="fa-fw fas fa-heart"></i><span> love</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://cdn.lianjinquan.com/img/img/top-img/2034045.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">lianjinquan</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page" href="/ebook/"><i class="fa-fw fas fa-folder-open"></i><span> 电子书</span></a></li><li><a class="site-page" target="_blank" rel="noopener" href="https://cdn.lianjinquan.com/html/loveIndex.html"><i class="fa-fw fas fa-heart"></i><span> love</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">linux用户和用户组管理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-12-23T16:00:00.000Z" title="发表于 2020-12-24 00:00:00">2020-12-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-24T11:27:35.856Z" title="更新于 2020-12-24 19:27:35">2020-12-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/linux/">linux</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>linux用户和用户组管理</p>
+<a id="more"></a>
+
+<h3 id="用户配置文件"><a href="#用户配置文件" class="headerlink" title="用户配置文件"></a>用户配置文件</h3><h4 id="用户信息文件-etc-passwd"><a href="#用户信息文件-etc-passwd" class="headerlink" title="用户信息文件/etc/passwd"></a>用户信息文件/etc/passwd</h4><ol>
+<li><p>越是对服务器安全性要求高的服务器，越需要建立合理的用户权限登记制度和服务器操作规范，在Linux中主要是通过用户配置文件来查看和修改用户信息</p>
+</li>
+<li><p>/etc/passwd</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]<span class="comment"># man 5 passwd #查看passwd配置文件帮助信息 5代表配置文件</span></span><br><span class="line">[root@192 ~]<span class="comment"># vim /etc/passwd # 查看passwd文件内容</span></span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">vcsa:x:69:69:virtual console memory owner:/dev:/sbin/nologin</span><br><span class="line">tcpdump:x:72:72::/:/sbin/nologin</span><br><span class="line">[root@192 ~]<span class="comment"># ll /etc/passwd</span></span><br><span class="line">-rw-r--r--. 1 root root 1662 12月  8 08:51 /etc/passwd</span><br><span class="line">[root@192 ~]<span class="comment"># ll /etc/shadow</span></span><br><span class="line">----------. 1 root root 1064 12月  8 08:59 /etc/shadow</span><br></pre></td></tr></table></figure>
+
+<p> passwd配置文件分为七个字段：<code>root:x:0:0:root:/root:/bin/bash</code></p>
+<ul>
+<li><p>第一个字段：用户名称</p>
+</li>
+<li><p>第二个字段：密码标志 x代表用户有密码，真正的密码放在/etc/shadow里，它里面进行了SHA512加密，如果没有x，代表没有密码，只能进行本地登陆，远程登陆会被禁止，SHA协议禁止</p>
+</li>
+<li><p>第三个字段：UID（用户ID）</p>
+<table>
+<thead>
+<tr>
+<th>用户id</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>超级用户</td>
+</tr>
+<tr>
+<td>1-499</td>
+<td>系统用户（伪用户）</td>
+</tr>
+<tr>
+<td>500-65535</td>
+<td>普通用户</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>第四个字段：GID（用户初始组ID）</p>
+<p>初始组：就是指用户一登陆就立刻拥有这个用户组的相关权限，每个用户的初始组只能有一个，一般就是和这个用户的用户名相同的组名作为这个用户的初始组<br>附加组：指用户可以加入多个其他的用户组，并拥有这些组的权限，附加组可以有多个</p>
+</li>
+<li><p>第五个字段：用户说明</p>
+</li>
+<li><p>第六个字段：家目录</p>
+<p>普通用户：/home/用户名/<br>超级用户：/root/</p>
+</li>
+<li><p>第七个字段：登陆之后的Shell</p>
+<p>Shell就是Linux的命令解释器，在/etc/passwd当中，除了标准Shell是/bin/bash之外。还可以写如/sbin/nologin，普通用户全为/sbin/nologin。/bin/bash为可以登陆，/sbin/nologin为禁止登陆，修改之后便可以禁止普通用户登陆</p>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="影子文件-etc-shadow"><a href="#影子文件-etc-shadow" class="headerlink" title="影子文件/etc/shadow"></a>影子文件/etc/shadow</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]<span class="comment"># vim /etc/shadow</span></span><br><span class="line">root:<span class="variable">$6</span><span class="variable">$fSPFTuqP4WOQ2DKs</span><span class="variable">$BYsNI13</span>/ZsDqCm9/qy9rVb4LUCBD7Ur7gzpBT5Ei3iP5ZqjZZiIu4NdBLlV1Ac4wUcIqizy1qPKQe3HAQjBiB/:18597:0:99999:7:::</span><br><span class="line">bin:*:15980:0:99999:7:::</span><br><span class="line">daemon:*:15980:0:99999:7:::</span><br><span class="line">pulse:!!:18597::::::</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Shadow配置文件分为个字段：</p>
+<ul>
+<li><p>第一个字段：用户名</p>
+</li>
+<li><p>第二个字段：加密算法<br>加密算法升级为SHA512散列加密算法，如果密码是“!!”或者“0”代表没有密码，不能登陆，可以用感叹号禁用用户密码</p>
+</li>
+<li><p>第三个字段：密码最后一次修改日期<br>使用1970年1月1日作为标准时间，每过一天时间戳加1</p>
+<p>时间戳换算：date -d “1970-01-01 [时间戳] days”</p>
+<p>日期换算时间戳：echo $(($(date –date=“年/月/日” +%s)/[时间戳]+1))</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]# date -d &quot;1970-01-01 16066 days&quot;  #时间戳换算日期 16066是时间戳</span><br><span class="line">2013年 12月 27日 星期五 00:00:00 CST</span><br><span class="line">[root@192 ~]# echo $(($(date --date=&quot;2014/01/06&quot; +%s)/86400+1)) # 日期换算时间戳</span><br><span class="line">16076</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第四个字段：两次密码的修改时间间隔时间（和第三个字段相比）</p>
+</li>
+<li><p>第五个字段：密码有效期（和第三个字段相比）</p>
+</li>
+<li><p>第六个字段：密码修改到期前的警告天数（和第五个字段相比）</p>
+</li>
+<li><p>第七个字段：密码过期后的宽限天数（和第五个字段相比）<br>0：代表密码过期后立即失效<br>-1：代表密码永远不会失效</p>
+</li>
+<li><p>第八个字段：账号失效时间<br>要用时间戳表示</p>
+</li>
+<li><p>第九个字段：保留</p>
+</li>
+</ul>
+<h4 id="组信息文件-etc-group"><a href="#组信息文件-etc-group" class="headerlink" title="组信息文件/etc/group"></a>组信息文件/etc/group</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]# vim /etc/group</span><br><span class="line">root:x:0:</span><br><span class="line">bin:x:1:bin,daemon</span><br><span class="line">daemon:x:2:bin,daemon</span><br><span class="line">sys:x:3:bin,adm</span><br><span class="line">adm:x:4:adm,daemon</span><br></pre></td></tr></table></figure>
+
+
+
+<p>组文件信息配置文件分4个字段：</p>
+<p>第一个字段：组名<br>第二个字段：组密码标志<br>第三个字段：GID<br>第四个字段：组中附加用户</p>
+<h4 id="组密码文件-etc-gshadow"><a href="#组密码文件-etc-gshadow" class="headerlink" title="组密码文件/etc/gshadow"></a>组密码文件/etc/gshadow</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]# vim /etc/gshadow</span><br><span class="line">root:::</span><br><span class="line">bin:::bin,daemon</span><br><span class="line">daemon:::bin,daemon</span><br><span class="line">sys:::bin,adm</span><br><span class="line">adm:::adm,daemon</span><br><span class="line">tty:::</span><br></pre></td></tr></table></figure>
+
+
+
+<p>组密码文件配置文件分4个字段：</p>
+<p>第一个字段：组名<br>第二个字段：组密码<br>第三个字段：组管理员用户名<br>第四个字段：组中附加用户</p>
+<h3 id="用户管理相关文件"><a href="#用户管理相关文件" class="headerlink" title="用户管理相关文件"></a>用户管理相关文件</h3><h4 id="用户的家目录-home"><a href="#用户的家目录-home" class="headerlink" title="用户的家目录/home/"></a>用户的家目录/home/</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]# ll /home/</span><br><span class="line">总用量 24</span><br><span class="line">drwx------. 2 root     root     16384 12月  2 05:14 lost+found</span><br><span class="line">drwx------. 4 yangmi   yangmi    4096 12月  8 10:13 yangmi</span><br><span class="line">[root@192 ~]# ll -d /root/</span><br><span class="line">dr-xr-x---. 34 root root 4096 12月 21 08:52 /root/</span><br></pre></td></tr></table></figure>
+
+
+
+<p>普通用户：/home/用户名/，所有者和所属组都是此用户，权限是700<br>超级用户：/root/，所有者和所属组都是root用户，权限是550<br>普通用户变为超级用户家目录不会变</p>
+<h4 id="用户的邮箱-var-spool-mail"><a href="#用户的邮箱-var-spool-mail" class="headerlink" title="用户的邮箱/var/spool/mail/"></a>用户的邮箱/var/spool/mail/</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]<span class="comment"># cd /var/spool/mail/</span></span><br><span class="line">[root@192 mail]<span class="comment"># ls  #/var/spool/mail/用户名/</span></span><br><span class="line">root  rpc   yangmi</span><br></pre></td></tr></table></figure>
+
+<h4 id="用户模板目录-etc-skel"><a href="#用户模板目录-etc-skel" class="headerlink" title="用户模板目录/etc/skel"></a>用户模板目录/etc/skel</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@192 yangmi]# cd /etc/skel/ #进入用户模板目录</span><br><span class="line">[root@192 skel]# vi warning.txt #在用户模板目录里面新加一个文件warning.txt</span><br><span class="line">[root@192 skel]# ls -a #用户模板目录里面有warning.txt文件</span><br><span class="line">.  ..  .bash_logout  .bash_profile  .bashrc  .gnome2  .mozilla  warning.txt</span><br><span class="line">[root@192 skel]# useradd user1 #添加新用户user1</span><br><span class="line">[root@192 skel]# passwd user1 #给用户user1设置密码</span><br><span class="line">[root@192 skel]# cd /home/user1/</span><br><span class="line">[root@192 user1]# ls -a #用户user1的家目录中也有warning.txt文件</span><br><span class="line">.  ..  .bash_logout  .bash_profile  .bashrc  .gnome2  .mozilla  warning.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在/etc/skel里创建了文件的话，在创建新用户时会自动出现在新用户家目录的默认隐藏信息里（用于写警告信息）</p>
+<h3 id="用户管理命令"><a href="#用户管理命令" class="headerlink" title="用户管理命令"></a>用户管理命令</h3><h4 id="用户添加命令useradd"><a href="#用户添加命令useradd" class="headerlink" title="用户添加命令useradd"></a>用户添加命令useradd</h4><table>
+<thead>
+<tr>
+<th align="left">语法</th>
+<th>说明</th>
+<th>选项</th>
+<th>选项说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">useradd [选项] 用户名</td>
+<td>添加新用户</td>
+<td>-u UID</td>
+<td>手工指定用户的UID号</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td></td>
+<td>-d 家目录</td>
+<td>手工指定用户的家目录</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td></td>
+<td>-c 用户说明</td>
+<td>手工指定用户的说明</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td></td>
+<td>-g 组名</td>
+<td>手工指定用户的初始组</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td></td>
+<td>-G 组名</td>
+<td>指定用户的附加组</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td></td>
+<td>-s shell</td>
+<td>手工指定</td>
+</tr>
+</tbody></table>
+<p>用户的登陆shell。默认是/bin/bash，passwd，shadow，group，gshadow，home，mail里面都有新用户信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]# useradd user #添加新用户user</span><br><span class="line">[root@192 ~]# passwd user  #设置密码</span><br><span class="line">[root@192 ~]# grep user /etc/passwd </span><br><span class="line">user:x:503:504::/home/user:/bin/bash</span><br><span class="line">[root@192 ~]# grep user /etc/shadow </span><br><span class="line">user:$6$XSmOILya$2F0UXlwx54wJerNRNz6xY0quG5ou2gGocowLGli71Dqy1N.4iGJDMa/XfiFxQrV1.MVSsweHOVStQug3pgeg60:18617:0:99999:7:::</span><br><span class="line">[root@192 ~]# grep user /etc/group</span><br><span class="line">user:x:504:</span><br><span class="line">[root@192 ~]# grep user /etc/gshadow</span><br><span class="line">user:!::</span><br><span class="line">[root@192 ~]# ll -d /home/user/</span><br><span class="line">drwx------. 4 user user 4096 12月 21 10:27 /home/user/</span><br><span class="line">[root@192 ~]# ll -d /var/spool/mail/user</span><br><span class="line">-rw-rw----. 1 user mail 0 12月 21 10:27 /var/spool/mail/user</span><br><span class="line">[root@192 ~]# useradd -u 666 -G root,bin -c &quot;test user&quot; -d /liming -s /bin/bash liming</span><br><span class="line">[root@192 ~]# grep liming /etc/passwd</span><br><span class="line">liming:x:666:666:test user:/liming:/bin/bash</span><br><span class="line">[root@192 ~]# ll -d /liming</span><br><span class="line">drwx------. 4 liming liming 4096 12月 24 04:04 /liming</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>/etc/default/useradd</code>里面定义了建立用户的默认信息</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GROUP=100</td>
+<td>用户默认组</td>
+</tr>
+<tr>
+<td>HOME=/home</td>
+<td>用户家目录</td>
+</tr>
+<tr>
+<td>INACTIVE=-1</td>
+<td>密码过期宽限天数（shadow文件第七个字段）</td>
+</tr>
+<tr>
+<td>EXPIRE=</td>
+<td>密码失效时间（shadow文件第八个字段）</td>
+</tr>
+<tr>
+<td>SHELL=/bin/bash</td>
+<td>默认shell</td>
+</tr>
+<tr>
+<td>SKEL=/etc/skel</td>
+<td>模板目录</td>
+</tr>
+<tr>
+<td>CREATE_MALL_SPOOL=yes</td>
+<td>是否建立邮箱</td>
+</tr>
+</tbody></table>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]# vim /etc/default/useradd</span><br><span class="line"><span class="meta">#</span><span class="bash"> useradd defaults file</span></span><br><span class="line">GROUP=100</span><br><span class="line">HOME=/home</span><br><span class="line">INACTIVE=-1</span><br><span class="line">EXPIRE=</span><br><span class="line">SHELL=/bin/bash</span><br><span class="line">SKEL=/etc/skel</span><br><span class="line">CREATE_MAIL_SPOOL=yes</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>/etc/login.defs</code> </p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PASS_MAX_DAYS 99999</td>
+<td>密码有效期(shadow文件第五个字段)</td>
+</tr>
+<tr>
+<td>PASS_MIN_DAYS 0</td>
+<td>密码修改间隔(shadow文件第四个字段)</td>
+</tr>
+<tr>
+<td>PASS_MIN_LEN 5</td>
+<td>密码最小5位（PAM）现在为PAM生效，5位密码不生效</td>
+</tr>
+<tr>
+<td>PASS_WARN_AGE 7</td>
+<td>密码到期警告(shadow文件第六个字段）</td>
+</tr>
+<tr>
+<td>UID_MIN 500</td>
+<td>最小UID范围</td>
+</tr>
+<tr>
+<td>GID_MAX 60000</td>
+<td>最大UID范围</td>
+</tr>
+<tr>
+<td>ENCRYPT_METHOD SHA512</td>
+<td>加密模式</td>
+</tr>
+</tbody></table>
+<h4 id="修改用户密码passwd"><a href="#修改用户密码passwd" class="headerlink" title="修改用户密码passwd"></a>修改用户密码passwd</h4><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>说明</th>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>passwd [选项] 用户名</td>
+<td>修改用户密码</td>
+<td>-S</td>
+<td>查询用户密码的密码状态。仅root用户可以</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>-l</td>
+<td>暂时锁定用户。仅root用户可用</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>-u</td>
+<td>解锁用户。仅root用户可用</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>–stdin</td>
+<td>可以通过管道符(|)输出的数据作为用户的密码</td>
+</tr>
+</tbody></table>
+<p><code>passwd 用户名</code>  root用户给普通用户修改密码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd liming</span><br></pre></td></tr></table></figure>
+
+<p>普通用户自己修改密码，例如使用liming用户登录修改密码，直接使用<code>passwd</code>，需要先确认密码后才能修改密码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
+
+<p><code>passwd -S 用户名</code> 查询用户密码的密码状态，例如下面的查询，用户密码设定时间（2020-12-23），密码修改时间间隔（0），密码有效期（99999），警告时间（7），密码不失效（-1），实际显示的就是<code>/etc/shadow</code>文件信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]# passwd -S liming</span><br><span class="line">liming PS 2020-12-23 0 99999 7 -1 (密码已设置，使用 SHA512 加密。)</span><br><span class="line">[root@192 ~]# cat /etc/shadow | grep liming</span><br><span class="line">liming:$6$0w2tQQRH$Eyjew7YZWX/s5s3XDrjpxkbbsnVBbulByFaZ7bfkSuuC/uPH9HfR.2lfmvRymMa3Z6vdvNTxsp8isr.0ip6.c/:18619:0:99999:7:::</span><br></pre></td></tr></table></figure>
+
+<p><code>passwd -l 用户名</code>  锁定用户，查看shadow文件可以看出密码前有!!，表示这个用户被锁定了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]# passwd -l liming #</span><br><span class="line">锁定用户 liming 的密码 。</span><br><span class="line">passwd: 操作成功</span><br><span class="line">[root@192 ~]# vim /etc/shadow</span><br><span class="line">liming:!!$6$0w2tQQRH$Eyjew7YZWX/s5s3XDrjpxkbbsnVBbulByFaZ7bfkSuuC/uPH9HfR.2lfmvRymMa3Z6vdvNTxsp8isr.0ip6.c/:18619:0:99999:7:::</span><br></pre></td></tr></table></figure>
+
+<p><code>passwd -u 用户名</code>  解锁用户，查看shadow文件可以看出密码前的!!被删除了，表示这个用户被解锁了</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]<span class="comment"># passwd -u  liming</span></span><br><span class="line">解锁用户 liming 的密码 。</span><br><span class="line">passwd: 操作成功</span><br><span class="line">[root@192 ~]<span class="comment"># vim /etc/shadow </span></span><br><span class="line">liming:<span class="variable">$6</span><span class="variable">$0w2tQQRH</span><span class="variable">$Eyjew7YZWX</span>/s5s3XDrjpxkbbsnVBbulByFaZ7bfkSuuC/uPH9HfR.2lfmvRymMa3Z6vdvNTxsp8isr.0ip6.c/:18619:0:99999:7:::</span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>echo &quot;123&quot; | passwd —stdin [用户名]</code> 使用字符串作为用户的密码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;123&quot; | passwd —stdin liming</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="修改用户信息usermod"><a href="#修改用户信息usermod" class="headerlink" title="修改用户信息usermod"></a>修改用户信息usermod</h4><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>说明</th>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>usermod [选项] 用户名</td>
+<td>修改用户信息</td>
+<td>-u UID</td>
+<td>修改用户的UID号</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>-c 用户说明</td>
+<td>修改用户的说明信息</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>-G 组名</td>
+<td>修改用户的附加组</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>-L</td>
+<td>临时锁定用户（Lock）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>-U</td>
+<td>解锁用户锁定（Unlock）</td>
+</tr>
+</tbody></table>
+<p>以下例子修改用户liming的用户说明为my user，加入root附加组，修改的uid号为550</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]# cat /etc/passwd</span><br><span class="line">liming:x:666:666:test user:/liming:/bin/bash</span><br><span class="line">[root@192 ~]# usermod -c &quot;my user&quot; -G root -u 550 liming</span><br><span class="line">[root@192 ~]# cat /etc/passwd</span><br><span class="line">liming:x:550:666:my user:/liming:/bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>锁定liming用户,此时<code>/etc/shadow </code>文件liming用户密码前多一个！</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]# usermod -L liming</span><br><span class="line">[root@192 ~]# vim /etc/shadow </span><br><span class="line">liming:!$6$0w2tQQRH$Eyjew7YZWX/s5s3XDrjpxkbbsnVBbulByFaZ7bfkSuuC/uPH9HfR.2lfmvRymMa3Z6vdvNTxsp8isr.0ip6.c/:18619:0:99999:7:::</span><br></pre></td></tr></table></figure>
+
+<p>解锁liming用户，此时<code>/etc/shadow</code> 文件liming用户密码前的！被删除</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]# usermod -U liming</span><br><span class="line">[root@192 ~]# vim /etc/shadow </span><br><span class="line">liming:$6$0w2tQQRH$Eyjew7YZWX/s5s3XDrjpxkbbsnVBbulByFaZ7bfkSuuC/uPH9HfR.2lfmvRymMa3Z6vdvNTxsp8isr.0ip6.c/:18619:0:99999:7:::</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="修改用户密码状态chage"><a href="#修改用户密码状态chage" class="headerlink" title="修改用户密码状态chage"></a>修改用户密码状态chage</h4><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>说明</th>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>chage [选项] 用户名</td>
+<td>修改用户密码状态</td>
+<td>-l</td>
+<td>列出用户的详细密码状态</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>-d 日期</td>
+<td>修改密码最后一次更新时间（shadow文件第三个字段）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>-m 天数</td>
+<td>两次修改密码间隔（shadow文件第四个字段）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>-M 天数</td>
+<td>密码有效期（shadow文件第五个字段）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>-W 天数</td>
+<td>密码过期前警告天数（shadow文件第六个字段）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>-I 天数</td>
+<td>密码过期后宽限天数（shadow文件第七个字段）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>-E 日期</td>
+<td>账号失效时间（shadow文件第八 个字段）</td>
+</tr>
+</tbody></table>
+<p>例子重要用法：<br><code>chage -d 0 [用户名]</code>这个命令其实是把密码修改日期归0了，这样用户一登陆就要修改密码（学校，公司身份系统修改初始密码）</p>
+<h4 id="删除用户userdel"><a href="#删除用户userdel" class="headerlink" title="删除用户userdel"></a>删除用户userdel</h4><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>说明</th>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>userdel [-r] 用户名</td>
+<td>删除用户</td>
+<td>-r</td>
+<td>删除用户的同时删除用户家目录</td>
+</tr>
+</tbody></table>
+<h4 id="查看用户ID"><a href="#查看用户ID" class="headerlink" title="查看用户ID"></a>查看用户ID</h4><p><code>id  用户名</code> 以下例子查询liming用户的用户ID</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]# id liming</span><br><span class="line">uid=550(liming) gid=666(liming) 组=666(liming),0(root)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="用户切换命令su"><a href="#用户切换命令su" class="headerlink" title="用户切换命令su"></a>用户切换命令su</h4><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>说明</th>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>su [选项] 用户</td>
+<td>用户切换命令</td>
+<td>-</td>
+<td>选项只使用“-”代表连带用户的环境变量一起切换</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>-c</td>
+<td>仅执行一次命令，而不切换用户身份</td>
+</tr>
+</tbody></table>
+<p><code>env</code>查看用户环境变量</p>
+<p>普通用户liming切换成超级用户root</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[liming@192 ~]$ su - root</span><br></pre></td></tr></table></figure>
+
+<p>不切换成root，但是执行useradd命令添加user1用户</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]# su - root -c &quot;useradd user1&quot; </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="用户组管理命令"><a href="#用户组管理命令" class="headerlink" title="用户组管理命令"></a>用户组管理命令</h3><h4 id="添加用户组"><a href="#添加用户组" class="headerlink" title="添加用户组"></a>添加用户组</h4><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>说明</th>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>groupadd [选项] 组名</td>
+<td>添加用户组</td>
+<td>-g GID</td>
+<td>指定组ID</td>
+</tr>
+</tbody></table>
+<p>添加用户组tg，可以在/etc/group下查看组信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@quan ~]# groupadd tg</span><br><span class="line">[root@quan ~]# vi /etc/group</span><br><span class="line">tg:x:1000:</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="修改用户组"><a href="#修改用户组" class="headerlink" title="修改用户组"></a>修改用户组</h4><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>说明</th>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>groupmod [选项] 组名</td>
+<td>修改用户组</td>
+<td>-g GID</td>
+<td>修改组ID</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>-n 新组名</td>
+<td>修改组名</td>
+</tr>
+</tbody></table>
+<p>把用户组tg修改为新组名lampgroup，可以在/etc/group下查看组名被修改了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@quan ~]# groupmod -n lampgroup tg</span><br><span class="line">[root@quan ~]# vi /etc/group</span><br><span class="line">lampgroup:x:1000:</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="删除用户组"><a href="#删除用户组" class="headerlink" title="删除用户组"></a>删除用户组</h4><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>说明</th>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>groupdel 组名</td>
+<td>删除用户组</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>删除组lampgroup，如果用户组有初始用户，需要先删除初始用户，然后才能删除用户组</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@quan ~]# groupdel lampgroup</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="用户添加入组、从组中删除"><a href="#用户添加入组、从组中删除" class="headerlink" title="用户添加入组、从组中删除"></a>用户添加入组、从组中删除</h4><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>说明</th>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>gpasswd 选项 组名</td>
+<td>把用户添加入组或者从组中删除</td>
+<td>-a 用户名</td>
+<td>把用户加入组</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>-d 用户名</td>
+<td>把用户从组中删除</td>
+</tr>
+</tbody></table>
+<p>把用户user1和user2添加进root组，在/etc/group中可以看到用户user1和user被加入了root组</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@iZuf6fhk4slpwaz2668zqyZ ~]# gpasswd -a user1 root</span><br><span class="line">Adding user user1 to group root</span><br><span class="line">[root@iZuf6fhk4slpwaz2668zqyZ ~]# gpasswd -a user2 root</span><br><span class="line">Adding user user2 to group root</span><br><span class="line">[root@quan ~]# vi /etc/group</span><br><span class="line">root:x:0:user1,user2</span><br></pre></td></tr></table></figure>
+
+<p>把用户user1从root用户组中删除，在/etc/group中可看到只剩下user2用户</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@iZuf6fhk4slpwaz2668zqyZ ~]# gpasswd -d user1 root</span><br><span class="line">Removing user user1 from group root</span><br><span class="line">[root@quan ~]# vi /etc/group</span><br><span class="line">root:x:0:user2</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">lianjinquan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.lianjinquan.com/2020/12/24/linux/linux04/">https://www.lianjinquan.com/2020/12/24/linux/linux04/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.lianjinquan.com" target="_blank">lianjinquan</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/linux/">linux</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.lianjinquan.com/img/img/top-img/2034045.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/12/25/linux/linux05/"><img class="prev-cover" src="https://cdn.lianjinquan.com/img/img/top-img/2009009.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">linux权限管理</div></div></a></div><div class="next-post pull-right"><a href="/2020/12/18/linux/linux03/"><img class="next-cover" src="https://cdn.lianjinquan.com/img/img/top-img/2037661.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">linux软件包管理</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/12/01/linux/linux02/" title="VMware安装centos6.8"><img class="cover" src="https://cdn.lianjinquan.com/img/img/top-img/2032859.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-01</div><div class="title">VMware安装centos6.8</div></div></a></div><div><a href="/2020/12/25/linux/linux05/" title="linux权限管理"><img class="cover" src="https://cdn.lianjinquan.com/img/img/top-img/2009009.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-25</div><div class="title">linux权限管理</div></div></a></div><div><a href="/2020/12/18/linux/linux03/" title="linux软件包管理"><img class="cover" src="https://cdn.lianjinquan.com/img/img/top-img/2037661.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-18</div><div class="title">linux软件包管理</div></div></a></div><div><a href="/2020/12/07/linux/linux01/" title="linux基础命令的操作"><img class="cover" src="https://cdn.lianjinquan.com/img/img/top-img/2033551.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-07</div><div class="title">linux基础命令的操作</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://cdn.lianjinquan.com/img/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">lianjinquan</div><div class="author-info__description">山有木兮木有枝，心悦君兮君不知。</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/lianjinquan" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1032905347@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">用户配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E6%96%87%E4%BB%B6-etc-passwd"><span class="toc-number">1.1.</span> <span class="toc-text">用户信息文件&#x2F;etc&#x2F;passwd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%B1%E5%AD%90%E6%96%87%E4%BB%B6-etc-shadow"><span class="toc-number">1.2.</span> <span class="toc-text">影子文件&#x2F;etc&#x2F;shadow</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E4%BF%A1%E6%81%AF%E6%96%87%E4%BB%B6-etc-group"><span class="toc-number">1.3.</span> <span class="toc-text">组信息文件&#x2F;etc&#x2F;group</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E5%AF%86%E7%A0%81%E6%96%87%E4%BB%B6-etc-gshadow"><span class="toc-number">1.4.</span> <span class="toc-text">组密码文件&#x2F;etc&#x2F;gshadow</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">用户管理相关文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%9A%84%E5%AE%B6%E7%9B%AE%E5%BD%95-home"><span class="toc-number">2.1.</span> <span class="toc-text">用户的家目录&#x2F;home&#x2F;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%9A%84%E9%82%AE%E7%AE%B1-var-spool-mail"><span class="toc-number">2.2.</span> <span class="toc-text">用户的邮箱&#x2F;var&#x2F;spool&#x2F;mail&#x2F;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95-etc-skel"><span class="toc-number">2.3.</span> <span class="toc-text">用户模板目录&#x2F;etc&#x2F;skel</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">用户管理命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E6%B7%BB%E5%8A%A0%E5%91%BD%E4%BB%A4useradd"><span class="toc-number">3.1.</span> <span class="toc-text">用户添加命令useradd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81passwd"><span class="toc-number">3.2.</span> <span class="toc-text">修改用户密码passwd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AFusermod"><span class="toc-number">3.3.</span> <span class="toc-text">修改用户信息usermod</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E7%8A%B6%E6%80%81chage"><span class="toc-number">3.4.</span> <span class="toc-text">修改用户密码状态chage</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7userdel"><span class="toc-number">3.5.</span> <span class="toc-text">删除用户userdel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7ID"><span class="toc-number">3.6.</span> <span class="toc-text">查看用户ID</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E5%88%87%E6%8D%A2%E5%91%BD%E4%BB%A4su"><span class="toc-number">3.7.</span> <span class="toc-text">用户切换命令su</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="toc-number">4.</span> <span class="toc-text">用户组管理命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E7%BB%84"><span class="toc-number">4.1.</span> <span class="toc-text">添加用户组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E7%BB%84"><span class="toc-number">4.2.</span> <span class="toc-text">修改用户组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7%E7%BB%84"><span class="toc-number">4.3.</span> <span class="toc-text">删除用户组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E6%B7%BB%E5%8A%A0%E5%85%A5%E7%BB%84%E3%80%81%E4%BB%8E%E7%BB%84%E4%B8%AD%E5%88%A0%E9%99%A4"><span class="toc-number">4.4.</span> <span class="toc-text">用户添加入组、从组中删除</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2020/12/25/linux/linux05/" title="linux权限管理"><img src="https://cdn.lianjinquan.com/img/img/top-img/2009009.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="linux权限管理"/></a><div class="content"><a class="title" href="/2020/12/25/linux/linux05/" title="linux权限管理">linux权限管理</a><time datetime="2020-12-24T16:00:00.000Z" title="发表于 2020-12-25 00:00:00">2020-12-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/12/24/linux/linux04/" title="linux用户和用户组管理"><img src="https://cdn.lianjinquan.com/img/img/top-img/2034045.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="linux用户和用户组管理"/></a><div class="content"><a class="title" href="/2020/12/24/linux/linux04/" title="linux用户和用户组管理">linux用户和用户组管理</a><time datetime="2020-12-23T16:00:00.000Z" title="发表于 2020-12-24 00:00:00">2020-12-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/12/18/linux/linux03/" title="linux软件包管理"><img src="https://cdn.lianjinquan.com/img/img/top-img/2037661.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="linux软件包管理"/></a><div class="content"><a class="title" href="/2020/12/18/linux/linux03/" title="linux软件包管理">linux软件包管理</a><time datetime="2020-12-17T16:00:00.000Z" title="发表于 2020-12-18 00:00:00">2020-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/12/07/linux/linux01/" title="linux基础命令的操作"><img src="https://cdn.lianjinquan.com/img/img/top-img/2033551.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="linux基础命令的操作"/></a><div class="content"><a class="title" href="/2020/12/07/linux/linux01/" title="linux基础命令的操作">linux基础命令的操作</a><time datetime="2020-12-06T16:00:00.000Z" title="发表于 2020-12-07 00:00:00">2020-12-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/12/01/linux/linux02/" title="VMware安装centos6.8"><img src="https://cdn.lianjinquan.com/img/img/top-img/2032859.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="VMware安装centos6.8"/></a><div class="content"><a class="title" href="/2020/12/01/linux/linux02/" title="VMware安装centos6.8">VMware安装centos6.8</a><time datetime="2020-11-30T16:00:00.000Z" title="发表于 2020-12-01 00:00:00">2020-12-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 <i style="color:#FF6A6A;animation: announ_animation 0.8s linear infinite;" class="fa fa-heartbeat"></i> lianjinquan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="timeDate"><span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span></div><div class="github-badge"><a style="color: #fff" rel="license" href="https://hexo.io/" target="_blank" title="由 Hexo 强力驱动"><span class="badge-subject">Powered</span><span class="badge-value bg-blue">Hexo</span></a><a style="color: #fff" rel="license" href="https://gitee.com/" target="_blank" title="静态网页托管于 Gitee Pages"><span class="badge-subject">Hosted</span><span class="badge-value bg-brightgreen">码云</span></a><a style="color: #fff" rel="license" href="https://account.aliyun.com/" target="_blank" title="阿里云 提供 CDN 加速服务"><span class="badge-subject">CDN</span><span class="badge-value bg-orange">阿里云</span></a><a style="color: #fff" rel="license" href="https://jerryc.me" target="_blank" title="站点使用 Butterfly主题"><span class="badge-subject">Theme</span><span class="badge-value bg-blue">Butterfly</span></a><a style="color: #fff" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="本站点采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议进行许可"><span class="badge-subject"><i class="fa fa-copyright"></i></span><span class="badge-value bg-lightgrey">BY-NC-SA 4.0</span></a></div><div class="icp"><a target="_blank" rel="noopener" href="http://beian.miit.gov.cn/"><img class="icp-icon" src="https://cdn.lianjinquan.com/img/img/icp.png"/><span>豫ICP备2020026301号</span></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.spacingElementById('content-inner')
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.spacingElementById('content-inner')
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      false && mermaid.init()
+    })
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script data-pjax src="/js/style.js"></script><script data-pjax src="/js/botui.js"></script><script data-pjax src="/js/timeDate.js"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="我,喜欢,你" data-fontsize="15px" data-random="false" async="async"></script></div></body></html>
